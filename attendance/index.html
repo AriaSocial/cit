@@ -19,12 +19,13 @@
         /* 全体を囲む外側の枠線付きコンテナ */
         .outer-container {
             width: 80vw; /* 画面幅の80% */
-            border: 2px solid #555; /* 外側枠線のスタイル（色、太さ、種類） */
+            /* 外側枠線の色を出欠ボタンと同じ#005882に変更 */
+            border: 2px solid #005882; /* 外側枠線のスタイル（色、太さ、種類） */
             border-radius: 15px; /* 外側枠線の角を丸くする */
             padding: 20px; /* 外側コンテナ内の余白 */
-            background-color: #e9e9e9; /* 外側コンテナの背景色 */
+            background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
-            display: flex; /* 子要素（曜日表示、区切り線、内側コンテナ）をflexboxで配置 */
+            display: flex; /* 子要素（曜日表示、時刻表示、区切り線、内側コンテナ）をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素を中央寄せ */
             text-align: center; /* テキストを中央寄せ */
@@ -33,30 +34,38 @@
         /* 曜日を表示する要素のスタイル */
         #current-day {
             margin-top: 0; /* 外側コンテナ上部の余白をなくす */
-            margin-bottom: 20px; /* 曜日と区切り線の間にスペースを追加 */
-            font-size: 2.5em; /* 曜日のフォントサイズを調整 */
+            margin-bottom: 8px; /* 曜日と時刻の間にスペースを調整 */
+            /* 曜日のフォントサイズを小さくしました */
+            font-size: 2em; /* フォントサイズを調整 */
             color: #222; /* テキストカラーを黒っぽくしました */
             font-weight: bold; /* 曜日を太字にする */
         }
 
+        /* 時刻を表示する要素のスタイル */
+        #current-time {
+            margin-top: 0; /* 曜日との余白をなくす */
+            margin-bottom: 15px; /* 時刻と区切り線の間にスペースを調整 */
+            /* 時刻のフォントサイズを小さくしました */
+            font-size: 1.2em; /* フォントサイズを調整 */
+            color: #444; /* テキストカラーを調整 */
+        }
+
+
         /* 区切り線のスタイル */
         .divider {
-            /* 区切り線の幅を70%に変更 */
-            width: 70%;
+            width: 70%; /* 区切り線の幅 */
             border: none; /* デフォルトのボーダーを削除 */
-            /* 区切り線の太さを外側枠線と同じ2pxに変更 */
             border-top: 2px solid #ccc; /* 区切り線のスタイル（色、太さ、種類） */
-            margin: 20px 0; /* 区切り線の上下の余白 */
+            margin: 15px 0; /* 区切り線の上下の余白を調整 */
         }
 
 
         /* 内側のコンテンツ（テキストとボタン）を囲む枠線付きのコンテナ */
         .content-container {
             width: 70vw; /* 画面幅の70% */
-            /* 内側枠線の太さを1pxに変更しました */
             border: 1px solid #333; /* 内側枠線のスタイル（色、太さ、種類） */
             border-radius: 10px; /* 内側枠線の角を丸くする */
-            padding: 30px 20px; /* コンテナ内の余白 */
+            padding: 25px 20px; /* コンテナ内の余白を調整 */
             background-color: #fff; /* コンテナの背景色 */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
             display: flex; /* 子要素をflexboxで配置 */
@@ -67,17 +76,19 @@
 
         h1 {
             margin-top: 0; /* コンテナ上部の余白をなくす */
-            margin-bottom: 30px; /* テキストとボタンの間にスペースを追加 */
+            margin-bottom: 25px; /* テキストとボタンの間にスペースを調整 */
             color: #333;
-            font-size: 24px; /* フォントサイズを調整 */
+            /* 科目名のフォントサイズを小さくしました */
+            font-size: 20px; /* フォントサイズを調整 */
         }
 
         .transition-button {
             /* ボタンの角を丸くする */
             border-radius: 10px; /* 角の丸みの大きさを調整 */
             /* 四角い形状に合わせてパディングを調整 */
-            padding: 10px 30px; /* 上下10px, 左右30px */
-            font-size: 18px;
+            padding: 8px 25px; /* 上下、左右のパディングを小さく調整 */
+            /* ボタンのフォントサイズを小さくしました */
+            font-size: 16px;
             cursor: pointer;
             border: none;
             /* ボタンの背景色 */
@@ -99,6 +110,8 @@
 
     <div class="outer-container">
         <p id="current-day"></p>
+
+        <p id="current-time"></p>
 
         <hr class="divider">
 
@@ -131,8 +144,22 @@
             dayElement.textContent = `${dayOfWeek}曜日`;
         }
 
-        // ページ読み込み時に曜日を表示
-        window.onload = displayCurrentDay;
+        // 現在の時刻を取得して表示する関数
+        function displayCurrentTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0'); // 時を2桁表示
+            const minutes = String(now.getMinutes()).padStart(2, '0'); // 分を2桁表示
+            const seconds = String(now.getSeconds()).padStart(2, '0'); // 秒を2桁表示
+            const timeElement = document.getElementById('current-time');
+            timeElement.textContent = `${hours}:${minutes}:${seconds}`; // 時刻を HH:MM:SS 形式で表示
+        }
+
+        // ページ読み込み時に曜日と時刻を表示し、時刻を1秒ごとに更新
+        window.onload = function() {
+            displayCurrentDay(); // 曜日を表示
+            displayCurrentTime(); // 初回時刻表示
+            setInterval(displayCurrentTime, 1000); // 1秒ごとに時刻を更新
+        };
     </script>
 
 </body>
