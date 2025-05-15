@@ -40,16 +40,6 @@
             font-weight: bold; /* 曜日を太字にする */
         }
 
-        /* 時刻表示のスタイルは削除しました */
-        /*
-        #current-time {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            color: #444;
-        }
-        */
-
         /* 区切り線のスタイル */
         .divider {
             width: 70vw; /* 区切り線の幅 */
@@ -69,15 +59,33 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
             display: flex; /* 子要素をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
-            align-items: center; /* 子要素を中央寄せ */
-            text-align: center; /* テキストを中央寄せ */
+            align-items: center; /* 子要素（h1とbutton）を中央寄せに戻す */
+            /* text-align: center; 子要素内のテキスト配置は個別に調整 */
+        }
+
+        /* 時間表示を含む左寄せ用のコンテナ */
+        .left-aligned-container {
+            width: 100%; /* content-containerの幅に合わせる */
+            text-align: left; /* テキストを左寄せ */
+            margin-bottom: 5px; /* 時間とh1の間のスペース */
+        }
+
+        /* 時間表示のスタイル */
+        .course-time {
+            font-size: 1.1em; /* フォントサイズを調整 */
+            color: #555;
+            margin-bottom: 0; /* 親要素でマージンを設定するため0に */
+            margin-top: 0; /* 上の要素との余白をなくす */
         }
 
         h1 {
-            margin-top: 0; /* コンテナ上部の余白をなくす */
+            margin-top: 0; /* 上の要素との余白をなくす */
             margin-bottom: 25px; /* テキストとボタンの間にスペースを調整 */
             color: #333;
             font-size: 20px; /* フォントサイズを調整 */
+            margin-left: 0; /* 左マージンを削除 */
+            text-align: center; /* h1自体を中央寄せ */
+            width: 100%; /* 中央寄せのために幅を100%に */
         }
 
         .transition-button {
@@ -111,6 +119,9 @@
         <hr class="divider">
 
         <div class="content-container">
+            <div class="left-aligned-container">
+                <p class="course-time">9:00 - 11:00</p>
+            </div>
             <h1>高度応用情報科学概論１ 高度</h1>
 
             <button class="transition-button" onclick="openNewWindow()">
@@ -139,26 +150,9 @@
             dayElement.textContent = `${dayOfWeek}曜日`;
         }
 
-        // 現在の時刻を取得して表示する関数は削除しました
-        /*
-        function displayCurrentTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const timeElement = document.getElementById('current-time');
-            timeElement.textContent = `${hours}:${minutes}:${seconds}`;
-        }
-        */
-
-        // ページ読み込み時に曜日を表示（時刻更新は削除）
+        // ページ読み込み時に曜日を表示
         window.onload = function() {
             displayCurrentDay(); // 曜日を表示
-            // 時刻表示と更新の呼び出しは削除しました
-            /*
-            displayCurrentTime();
-            setInterval(displayCurrentTime, 1000);
-            */
         };
     </script>
 
