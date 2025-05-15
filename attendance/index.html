@@ -25,7 +25,7 @@
             padding: 20px; /* 外側コンテナ内の余白 */
             background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
-            display: flex; /* 子要素（曜日表示、区切り線、内側コンテナ）をflexboxで配置 */
+            display: flex; /* 子要素（曜日表示、区切り線、各セクション）をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素を中央寄せ */
             text-align: center; /* テキストを中央寄せ */
@@ -40,7 +40,7 @@
             font-weight: bold; /* 曜日を太字にする */
         }
 
-        /* 区切り線のスタイル */
+        /* 区切り線のスタイル（最初のセクションの上にあるもの） */
         .divider {
             width: 70vw; /* 区切り線の幅 */
             border: none; /* デフォルトのボーダーを削除 */
@@ -61,7 +61,14 @@
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素（h1とbutton）を中央寄せに戻す */
             /* text-align: center; 子要素内のテキスト配置は個別に調整 */
+            margin-bottom: 20px; /* セクション間の余白を追加 */
         }
+
+        /* 最後のcontent-containerの下マージンは不要 */
+        .outer-container .content-container:last-child {
+            margin-bottom: 0;
+        }
+
 
         /* 時間表示を含む左寄せ用のコンテナ */
         .left-aligned-container {
@@ -124,7 +131,29 @@
             </div>
             <h1>高度応用情報科学概論１ 高度</h1>
 
-            <button class="transition-button" onclick="openNewWindow()">
+            <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">
+                出欠登録
+            </button>
+        </div>
+
+        <div class="content-container">
+             <div class="left-aligned-container">
+                <p class="course-time">11:00 - 13:00</p>
+            </div>
+            <h1>線形代数基礎 高度</h1>
+
+            <button class="transition-button" onclick="openNewWindow('')">
+                出欠登録
+            </button>
+        </div>
+
+        <div class="content-container">
+             <div class="left-aligned-container">
+                <p class="course-time">14:00 - 16:00</p>
+            </div>
+            <h1>初年次教育 高度</h1>
+
+            <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331')">
                 出欠登録
             </button>
         </div>
@@ -132,12 +161,15 @@
 
     <script>
         // ボタンがクリックされたときに実行される関数
-        function openNewWindow() {
-            // ここに遷移させたいウェブサイトのURLを指定してください
-            var urlToOpen = 'https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103'; // 出欠登録ページのURL
-
+        function openNewWindow(urlToOpen) {
             // 別ウィンドウ（新しいタブ）でURLを開く
-            window.open(urlToOpen, '_blank');
+            // URLが空の場合は何もしないか、エラーメッセージを表示することも可能
+            if (urlToOpen) {
+                window.open(urlToOpen, '_blank');
+            } else {
+                console.log('URLが指定されていません'); // 開発者向けコンソールに表示
+                // alert('現在、このリンクは利用できません。'); // ユーザー向けにアラートを表示する場合
+            }
         }
 
         // 現在の曜日を取得して表示する関数
