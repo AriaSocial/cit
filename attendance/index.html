@@ -605,14 +605,14 @@
         <div class="menu-content">
             <h2>開発メニュー</h2>
             <div class="day-selection-grid">
-                <button onclick="setDisplayedDay(1)">月曜日</button>
-                <button onclick="setDisplayedDay(2)">火曜日</button>
-                <button onclick="setDisplayedDay(3)">水曜日</button>
-                <button onclick="setDisplayedDay(4)">木曜日</button>
-                <button onclick="setDisplayedDay(5)">金曜日</button>
-                <button onclick="setDisplayedDay(6)">土曜日</button>
-                <button onclick="setDisplayedDay(0)">日曜日</button>
-                <button class="reset-button" onclick="resetDisplayedDay()">解除</button>
+                <button onclick="setDisplayedDay(event, 1)">月曜日</button>
+                <button onclick="setDisplayedDay(event, 2)">火曜日</button>
+                <button onclick="setDisplayedDay(event, 3)">水曜日</button>
+                <button onclick="setDisplayedDay(event, 4)">木曜日</button>
+                <button onclick="setDisplayedDay(event, 5)">金曜日</button>
+                <button onclick="setDisplayedDay(event, 6)">土曜日</button>
+                <button onclick="setDisplayedDay(event, 0)">日曜日</button>
+                <button class="reset-button" onclick="resetDisplayedDay(event)">解除</button>
             </div>
             <button class="close-menu-button" onclick="hideDevelopmentMenu()">閉じる</button>
         </div>
@@ -764,19 +764,21 @@
         }
 
         // 表示する曜日を設定し、セクション表示を更新する関数
-        function setDisplayedDay(day) {
-            // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
+        // eventオブジェクトを受け取るように修正
+        function setDisplayedDay(event, day) {
+            event.stopPropagation(); // イベント伝播を停止
             showWeekdaySections(day); // セクション表示を更新
             // メニューを閉じる処理に遅延を追加
-            setTimeout(hideDevelopmentMenu, 50); // 50ミリ秒の遅延
+            setTimeout(hideDevelopmentMenu, 100); // 遅延を100ミリ秒に調整
         }
 
         // 表示を今日の曜日に戻す関数
-        function resetDisplayedDay() {
-            // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
+        // eventオブジェクトを受け取るように修正
+        function resetDisplayedDay(event) {
+            event.stopPropagation(); // イベント伝播を停止
             showWeekdaySections(); // セクション表示を今日の曜日に戻す
             // メニューを閉じる処理に遅延を追加
-            setTimeout(hideDevelopmentMenu, 50); // 50ミリ秒の遅延
+            setTimeout(hideDevelopmentMenu, 100); // 遅延を100ミリ秒に調整
         }
 
 
