@@ -139,6 +139,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
             max-width: 80%; /* 最大幅 */
+            display: flex; /* 子要素をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央寄せ */
+            /* メニューに枠線を追加 */
+            border: 1px solid #333; /* セクションの枠線と同じスタイル */
         }
 
         .menu-content h2 {
@@ -147,42 +152,60 @@
             color: #333;
         }
 
-        /* メニュー内の一般的なボタンのスタイル */
-        .menu-content button {
-            margin: 10px;
+        /* メニュー内のクラスボタンを囲むコンテナのスタイル */
+        .class-buttons-grid {
+            display: grid; /* グリッドレイアウトを使用 */
+            grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
+            gap: 25px; /* ボタン間の隙間 */
+            margin-bottom: 20px; /* ボタンと閉じるボタンの間のスペース */
+            width: 100%; /* 親要素の幅に合わせる */
+        }
+
+
+        /* メニュー内の一般的なボタンのスタイル（閉じるボタン以外） */
+        .menu-content button:not(.close-menu-button) {
+            margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #4168E1; /* デフォルトの青色 */
-            color: white;
-            transition: background-color 0.3s ease;
+            /* ボタンの角を10px丸くしました */
+            border-radius: 10px;
+            /* デフォルトの青色背景 */
+            background-color: #4168E1;
+            border: none; /* ボーダーを削除 */
+            color: white; /* テキストカラーを白に */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%; /* グリッドセルに合わせて幅を100%に */
         }
 
-        .menu-content button:hover {
-             background-color: #3556b8; /* デフォルトのホバー色 */
+        .menu-content button:not(.close-menu-button):hover {
+             background-color: #3556b8; /* ホバー時の背景色 */
+             color: white; /* ホバー時のテキストカラー */
         }
 
-        /* 閉じるボタンのスタイルを個別に指定に関するCSSは削除しました */
-        /*
+        /* 閉じるボタンのスタイルを個別に指定 */
         .close-menu-button {
             margin: 10px;
             padding: 10px 20px;
             font-size: 1em;
             cursor: pointer;
-            border: none;
             border-radius: 5px;
+            /* 閉じるボタンの背景色を#E5E5E5に変更 */
             background-color: #E5E5E5;
+            /* 閉じるボタンの枠線スタイル */
+            border: 1px solid #ccc; /* 薄いグレーの枠線 */
+            /* 閉じるボタンのテキストカラーを黒っぽく変更 */
             color: #333;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            width: 80%; /* ボタンの幅を調整（必要に応じて） */
         }
 
         .close-menu-button:hover {
-            background-color: #d0d0d0;
-            color: #333;
+            /* 閉じるボタンのホバー時の背景色を調整 */
+            background-color: #d0d0d0; /* #E5E5E5より少し濃い色 */
+            border-color: #b0b0b0; /* ホバー時の枠線色 */
+            color: #333; /* テキストカラーは維持 */
         }
-        */
     </style>
 </head>
 <body>
@@ -228,10 +251,14 @@
 
     <div id="linearAlgebraMenu" class="menu-overlay">
         <div class="menu-content">
-            <h2>線形代数基礎 高度 メニュー</h2>
-            <p>メニュー項目をここに表示します。</p>
-            <button onclick="hideLinearAlgebraMenu()">閉じる</button>
+            <h2>線形代数基礎 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204')">偶数</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">奇数</button>
             </div>
+
+            <button class="close-menu-button" onclick="hideLinearAlgebraMenu()">閉じる</button>
+        </div>
     </div>
 
 
