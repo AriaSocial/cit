@@ -25,7 +25,7 @@
             padding: 20px; /* 外側コンテナ内の余白 */
             background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
-            display: flex; /* 子要素（曜日表示、区切り線、各セクション）をflexboxで配置 */
+            display: flex; /* 子要素（曜日表示、区切り線、セクションコンテナ）をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素を中央寄せ */
             text-align: center; /* テキストを中央寄せ */
@@ -40,12 +40,20 @@
             font-weight: bold; /* 曜日を太字にする */
         }
 
-        /* 区切り線のスタイル（最初のセクションの上にあるもの） */
+        /* 区切り線のスタイル */
         .divider {
             width: 70vw; /* 区切り線の幅 */
             border: none; /* デフォルトのボーダーを削除 */
             border-top: 2px solid #ccc; /* 区切り線のスタイル（色、太さ、種類） */
             margin: 15px 0; /* 区切り線の上下の余白を調整 */
+        }
+
+        /* 曜日ごとのセクションを読み込むコンテナ */
+        #sections-container {
+            width: 100%; /* 親要素の幅に合わせる */
+            display: flex; /* 子要素をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央寄せ */
         }
 
 
@@ -65,7 +73,7 @@
         }
 
         /* 最後のcontent-containerの下マージンは不要 */
-        .outer-container .content-container:last-child {
+        #sections-container .content-container:last-child {
             margin-bottom: 0;
         }
 
@@ -215,38 +223,8 @@
 
         <hr class="divider">
 
-        <div class="content-container">
-            <div class="left-aligned-container">
-                <p class="course-time">9:00 - 11:00</p>
+        <div id="sections-container">
             </div>
-            <h1>高度応用情報科学概論１ 高度</h1>
-
-            <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">
-                出欠登録
-            </button>
-        </div>
-
-        <div class="content-container">
-             <div class="left-aligned-container">
-                <p class="course-time">11:00 - 13:00</p>
-            </div>
-            <h1>線形代数基礎 高度</h1>
-
-            <button class="transition-button" onclick="showLinearAlgebraMenu()">
-                出欠登録
-            </button>
-        </div>
-
-        <div class="content-container">
-             <div class="left-aligned-container">
-                <p class="course-time">14:00 - 16:00</p>
-            </div>
-            <h1>初年次教育 高度</h1>
-
-            <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331')">
-                出欠登録
-            </button>
-        </div>
     </div>
 
     <div id="linearAlgebraMenu" class="menu-overlay">
@@ -297,9 +275,56 @@
             menu.style.display = 'none'; // メニューを非表示
         }
 
-        // ページ読み込み時に曜日を表示
+        // 曜日ごとのセクションを読み込む関数
+        async function loadSections() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 曜日を取得 (0=日, 1=月, ..., 5=金, 6=土)
+            const sectionsContainer = document.getElementById('sections-container');
+            let sectionsFile = '';
+
+            // 曜日に応じて読み込むHTMLファイルを決定
+            switch (dayOfWeek) {
+                case 1: // 月曜日
+                    sectionsFile = 'monday_sections.html';
+                    break;
+                case 2: // 火曜日
+                    sectionsFile = 'tuesday_sections.html';
+                    break;
+                case 3: // 水曜日
+                    sectionsFile = 'wednesday_sections.html';
+                    break;
+                case 4: // 木曜日
+                    sectionsFile = 'thursday_sections.html';
+                    break;
+                case 5: // 金曜日
+                    sectionsFile = 'friday_sections.html';
+                    break;
+                default: // 土曜日、日曜日は何も表示しない
+                    sectionsContainer.innerHTML = '<p>本日は授業がありません。</p>'; // 例としてメッセージを表示
+                    return; // 処理を終了
+            }
+
+            try {
+                const response = await fetch(sectionsFile);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${sectionsFile}: ${response.status}`);
+                }
+                const html = await response.text();
+
+                // 読み込んだHTMLをsections-containerに挿入
+                sectionsContainer.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading sections:', error);
+                sectionsContainer.innerHTML = '<p>セクションの読み込みに失敗しました。</p>'; // エラーメッセージを表示
+            }
+        }
+
+
+        // ページ読み込み時に曜日を表示し、曜日ごとのセクションを読み込む
         window.onload = function() {
             displayCurrentDay(); // 曜日を表示
+            loadSections(); // 曜日ごとのセクションを読み込む
 
             // メニューオーバーレイがクリックされたらメニューを閉じる
             const menuOverlay = document.getElementById('linearAlgebraMenu');
