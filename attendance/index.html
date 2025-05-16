@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出欠登録ページ</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; /* コンテンツ全体を中央寄せ */
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: sans-serif;
+            padding: 20px; /* 余白を追加 */
+            box-sizing: border-box; /* パディングとボーダーを幅に含める */
+        }
+
+        /* 全体を囲む外側の枠線付きコンテナ */
+        .outer-container {
+            width: 80vw; /* 画面幅の80% */
+            /* 外側枠線の色を#4168E1に変更 */
+            border: 2px solid #4168E1; /* 外側枠線のスタイル（色、太さ、種類） */
+            border-radius: 15px; /* 外側枠線の角を丸くする */
+            padding: 20px; /* 外側コンテナ内の余白 */
+            background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
+            display: flex; /* 子要素（曜日表示、区切り線、セクション）をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央寄せ */
+            text-align: center; /* テキストを中央寄せ */
+        }
+
+        /* 曜日を表示する要素のスタイル */
+        #current-day {
+            margin-top: 0; /* 外側コンテナ上部の余白をなくす */
+            margin-bottom: 20px; /* 曜日と区切り線の間にスペースを調整 */
+            font-size: 2em; /* 曜日のフォントサイズを調整 */
+            color: #222; /* テキストカラーを黒っぽくしました */
+            font-weight: bold; /* 曜日を太字にする */
+        }
+
+        /* 区切り線のスタイル */
+        .divider {
+            width: 70vw; /* 区切り線の幅 */
+            border: none; /* デフォルトのボーダーを削除 */
+            border-top: 2px solid #ccc; /* 区切り線のスタイル（色、太さ、種類） */
+            margin: 15px 0; /* 区切り線の上下の余白を調整 */
+        }
+
+        /* 各曜日のセクションをまとめるコンテナの基本スタイル */
+        .weekday-sections {
+            display: none; /* デフォルトでは非表示 */
+            width: 100%; /* 親要素の幅に合わせる */
+            display: flex; /* 子要素をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央寄せ */
+        }
+
+        /* 内側のコンテンツ（テキストとボタン）を囲む枠線付きのコンテナ */
+        .content-container {
+            width: 70vw; /* 画面幅の70% */
+            border: 1px solid #333; /* 内側枠線のスタイル（色、太さ、種類） */
+            border-radius: 10px; /* 内側枠線の角を丸くする */
+            padding: 25px 20px; /* コンテナ内の余白を調整 */
+            background-color: #fff; /* コンテナの背景色 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
+            display: flex; /* 子要素をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素（h1とbutton）を中央寄せに戻す */
+            /* text-align: center; 子要素内のテキスト配置は個別に調整 */
+            margin-bottom: 20px; /* セクション間の余白を追加 */
+        }
+
+        /* 各曜日の最後のcontent-containerの下マージンは不要 */
+        .weekday-sections .content-container:last-child {
+             margin-bottom: 0;
+        }
+
+
+        /* 時間表示を含む左寄せ用のコンテナ */
+        .left-aligned-container {
+            width: 100%; /* content-containerの幅に合わせる */
+            text-align: left; /* テキストを左寄せ */
+            margin-bottom: 5px; /* 時間とh1の間のスペース */
+        }
+
+        /* 時間表示のスタイル */
+        .course-time {
+            font-size: 1.1em; /* フォントサイズを調整 */
+            color: #555;
+            margin-bottom: 0; /* 親要素でマージンを設定するため0に */
+            margin-top: 0; /* 上の要素との余白をなくす */
+        }
+
+        h1 {
+            margin-top: 0; /* 上の要素との余白をなくす */
+            margin-bottom: 25px; /* テキストとボタンの間にスペースを調整 */
+            color: #333;
+            font-size: 20px; /* フォントサイズを調整 */
+            margin-left: 0; /* 左マージンを削除 */
+            text-align: center; /* h1自体を中央寄せ */
+            width: 100%; /* 中央寄せのために幅を100%に */
+        }
+
+        .transition-button {
+            /* ボタンの角を丸くする */
+            border-radius: 10px; /* 角の丸みの大きさを調整 */
+            /* 四角い形状に合わせてパディングを調整 */
+            padding: 8px 25px; /* 上下、左右のパディングを小さく調整 */
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            /* ボタンの背景色を#4168E1に変更 */
+            background-color: #4168E1;
+            /* ボタンのテキストカラー */
+            color: #FFFFFF;
+            transition: background-color 0.3s ease;
+        }
+
+        .transition-button:hover {
+            /* ホバー時の背景色を少し濃くする */
+            background-color: #3556b8; /* #4168E1より少し濃い色 */
+            /* ホバー時のテキストカラーは白を維持 */
+            color: #FFFFFF;
+        }
+
+        /* メニューオーバーレイのスタイル */
+        .menu-overlay {
+            position: fixed; /* 画面全体を覆う */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+            display: none; /* デフォルトでは非表示 */
+            justify-content: center; /* メニューを中央寄せ */
+            align-items: center;
+            z-index: 1000; /* 他の要素より手前に表示 */
+        }
+
+        /* メニューコンテンツのスタイル */
+        .menu-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 80%; /* 最大幅 */
+            display: flex; /* 子要素をflexboxで配置 */
+            flex-direction: column; /* 子要素を縦に並べる */
+            align-items: center; /* 子要素を中央寄せ */
+            /* メニューに枠線を追加 */
+            border: 1px solid #333; /* セクションの枠線と同じスタイル */
+        }
+
+        .menu-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* メニュー内のクラスボタンを囲むコンテナのスタイル */
+        .class-buttons-grid {
+            display: grid; /* グリッドレイアウトを使用 */
+            grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
+            gap: 25px; /* ボタン間の隙間 */
+            margin-bottom: 20px; /* ボタンと閉じるボタンの間のスペース */
+            width: 100%; /* 親要素の幅に合わせる */
+        }
+
+
+        /* メニュー内の一般的なボタンのスタイル（閉じるボタン以外） */
+        .menu-content button:not(.close-menu-button) {
+            margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            /* ボタンの角を10px丸くしました */
+            border-radius: 10px;
+            /* デフォルトの青色背景 */
+            background-color: #4168E1;
+            border: none; /* ボーダーを削除 */
+            color: white; /* テキストカラーを白に */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%; /* グリッドセルに合わせて幅を100%に */
+        }
+
+        .menu-content button:not(.close-menu-button):hover {
+             background-color: #3556b8; /* ホバー時の背景色 */
+             color: white; /* ホバー時のテキストカラー */
+        }
+
+        /* 閉じるボタンのスタイルを個別に指定 */
+        .close-menu-button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            /* 閉じるボタンの背景色を#E5E5E5に変更 */
+            background-color: #E5E5E5;
+            /* 閉じるボタンの枠線スタイル */
+            border: 1px solid #ccc; /* 薄いグレーの枠線 */
+            /* 閉じるボタンのテキストカラーを黒っぽく変更 */
+            color: #333;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            width: 80%; /* ボタンの幅を調整（必要に応じて） */
+        }
+
+        .close-menu-button:hover {
+            /* 閉じるボタンのホバー時の背景色を調整 */
+            background-color: #d0d0d0; /* #E5E5E5より少し濃い色 */
+            border-color: #b0b0b0; /* ホバー時の枠線色 */
+            color: #333; /*テキストカラーは維持 */
+        }
+
+        /* グレーアウトされたボタンのスタイル */
+        .grayed-out-button {
+            background-color: #e0e0e0 !important; /* 薄いグレーの背景 */
+            color: #a0a0a0 !important; /* グレーのテキスト */
+            cursor: not-allowed !important; /* カーソルを禁止マークに */
+            pointer-events: none; /* クリックイベントを無効化 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outer-container">
+        <p id="current-day"></p>
+
+        <hr class="divider">
+
+        <div id="mondaySections" class="weekday-sections">
+            <div class="content-container">
+                <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>英語理解１</h1>
+                <button class="transition-button" onclick="showEnglishMenu()">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 17:00</p>
+                </div>
+                <h1>数学基礎 高度</h1>
+                <button class="transition-button" onclick="showMathMenu()">
+                    出欠登録
+                </button>
+            </div>
+        </div>
+        <div id="tuesdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>スポーツ科学</h1>
+                <button class="transition-button grayed-out-button">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">13:00 - 15:00</p>
+                </div>
+                <h1>言語と文化１</h1>
+                <button class="transition-button" onclick="showLanguageCultureMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">15:00 - 17:00</p>
+                </div>
+                <h1>情報リテラシ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7104')">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="wednesdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">9:00 - 11:00</p>
+                </div>
+                <h1>数理・データサイエンス・AI入門 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7104')">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>英語表現１</h1>
+                <button class="transition-button" onclick="showEnglishExpressionMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 18:00</p>
+                </div>
+                <h1>情報リテラシ演習１ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103')">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="thursdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">10:00 - 12:00</p>
+                </div>
+                <h1>日本語表現法 高度</h1>
+                <button class="transition-button" onclick="showJapaneseExpressionMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">13:00 - 15:00</p>
+                </div>
+                <h1>学部指定科目群 1</h1>
+                <button class="transition-button" onclick="showFacultySubjectsMenu()">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="fridaySections" class="weekday-sections">
+            <div class="content-container">
+                <div class="left-aligned-container">
+                    <p class="course-time">9:00 - 11:00</p>
+                </div>
+                <h1>高度応用情報科学概論１ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>線形代数基礎 高度</h1>
+                <button class="transition-button" onclick="showLinearAlgebraMenu()">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 16:00</p>
+                </div>
+                <h1>初年次教育 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331')">
+                    出欠登録
+                </button>
+            </div>
+        </div>
+        <div id="saturdaySections" class="weekday-sections">
+            <p>該当講義なし</p>
+        </div>
+        <div id="weekendMessage" class="weekday-sections">
+             <p>該当講義なし</p>
+        </div>
+        </div>
+
+    <div id="linearAlgebraMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>線形代数基礎 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204')">偶数</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">奇数</button>
+            </div>
+
+            <button class="close-menu-button" onclick="hideLinearAlgebraMenu()">閉じる</button>
+        </div>
+    </div>
+    <div id="englishMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>英語理解１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5206')">ａクラス</button>
+                <button class="transition-button grayed-out-button">ｂクラス</button>
+                <button class="transition-button grayed-out-button">ｃクラス</button>
+                <button class="transition-button grayed-out-button">ｄクラス</button>
+                <button class="transition-button grayed-out-button">ｅクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5203')">ｆクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5204')">ｇクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideEnglishMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="mathMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>数学基礎 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">ａクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7202')">ｂｃクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideMathMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="languageCultureMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>言語と文化１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307')">中国語</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">ドイツ語</button>
+                <button class="transition-button grayed-out-button">フランス語</button>
+            </div>
+            <button class="close-menu-button" onclick="hideLanguageCultureMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="englishExpressionMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>英語表現１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button grayed-out-button">ａクラス</button>
+                <button class="transition-button grayed-out-button">ｂクラス</button>
+                <button class="transition-button grayed-out-button">ｃクラス</button>
+                <button class="transition-button grayed-out-button">ｄクラス</button>
+                <button class="transition-button grayed-out-button">ｅクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104')">ｆクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5203')">ｇクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideEnglishExpressionMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="japaneseExpressionMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>日本語表現法 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button grayed-out-button">ａクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304')">ｂクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5305')">ｃクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideJapaneseExpressionMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="facultySubjectsMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>学部指定科目群 1</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102')">倫理学</button>
+                <button class="transition-button grayed-out-button">歴史と人間</button>
+                <button class="transition-button grayed-out-button">心理学</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8204')">憲法と社会</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8205')">科学技術史</button>
+                <button class="transition-button grayed-out-button">環境科学概論</button>
+            </div>
+            <button class="close-menu-button" onclick="hideFacultySubjectsMenu()">閉じる</button>
+        </div>
+    </div>
+    <script>
+        // ボタンがクリックされたときに実行される関数（URL遷移用）
+        function openNewWindow(urlToOpen) {
+            // 別ウィンドウ（新しいタブ）でURLを開く
+            // URLが空の場合は何もしないか、エラーメッセージを表示することも可能
+            if (urlToOpen) {
+                window.open(urlToOpen, '_blank');
+            } else {
+                console.log('URLが指定されていません'); // 開発者向けコンソールに表示
+                // alert('現在、このリンクは利用できません。'); // ユーザー向けにアラートを表示する場合
+            }
+        }
+
+        // 現在の曜日を取得して表示する関数
+        function displayCurrentDay() {
+            const days = ['日', '月', '火', '水', '木', '金', '土'];
+            const today = new Date();
+            const dayOfWeek = days[today.getDay()];
+            const dayElement = document.getElementById('current-day');
+            // 表示テキストを「X曜日」の形式に変更
+            dayElement.textContent = `${dayOfWeek}曜日`;
+        }
+
+        // 線形代数基礎メニューを表示する関数
+        function showLinearAlgebraMenu() {
+            const menu = document.getElementById('linearAlgebraMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 線形代数基礎メニューを非表示にする関数
+        function hideLinearAlgebraMenu() {
+            const menu = document.getElementById('linearAlgebraMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 英語理解１メニューを表示する関数を追加
+        function showEnglishMenu() {
+            const menu = document.getElementById('englishMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 英語理解１メニューを非表示にする関数を追加
+        function hideEnglishMenu() {
+            const menu = document.getElementById('englishMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 数学基礎 高度メニューを表示する関数を追加
+        function showMathMenu() {
+            const menu = document.getElementById('mathMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 数学基礎 高度メニューを非表示にする関数を追加
+        function hideMathMenu() {
+            const menu = document.getElementById('mathMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 言語と文化１メニューを表示する関数を追加
+        function showLanguageCultureMenu() {
+            const menu = document.getElementById('languageCultureMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 言語と文化１メニューを非表示にする関数を追加
+        function hideLanguageCultureMenu() {
+            const menu = document.getElementById('languageCultureMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 英語表現１メニューを表示する関数を追加
+        function showEnglishExpressionMenu() {
+            const menu = document.getElementById('englishExpressionMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 英語表現１メニューを非表示にする関数を追加
+        function hideEnglishExpressionMenu() {
+            const menu = document.getElementById('englishExpressionMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 日本語表現法 高度メニューを表示する関数を追加
+        function showJapaneseExpressionMenu() {
+            const menu = document.getElementById('japaneseExpressionMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 日本語表現法 高度メニューを非表示にする関数を追加
+        function hideJapaneseExpressionMenu() {
+            const menu = document.getElementById('japaneseExpressionMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+        // 学部指定科目群 1メニューを表示する関数を追加
+        function showFacultySubjectsMenu() {
+            const menu = document.getElementById('facultySubjectsMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 学部指定科目群 1メニューを非表示にする関数を追加
+        function hideFacultySubjectsMenu() {
+            const menu = document.getElementById('facultySubjectsMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
+
+        // 曜日ごとのセクションを表示する関数
+        function showWeekdaySections() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 曜日を取得 (0=日, 1=月, ..., 5=金, 6=土)
+
+            // 全ての曜日セクションと週末メッセージを非表示にする
+            document.querySelectorAll('.weekday-sections').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // 現在の曜日に対応するセクションを表示する
+            switch (dayOfWeek) {
+                case 1: // 月曜日
+                    document.getElementById('mondaySections').style.display = 'flex';
+                    break;
+                case 2: // 火曜日
+                    document.getElementById('tuesdaySections').style.display = 'flex';
+                    break;
+                case 3: // 水曜日
+                    document.getElementById('wednesdaySections').style.display = 'flex';
+                    break;
+                case 4: // 木曜日
+                    document.getElementById('thursdaySections').style.display = 'flex';
+                    break;
+                case 5: // 金曜日
+                    document.getElementById('fridaySections').style.display = 'flex';
+                    break;
+                case 6: // 土曜日
+                    document.getElementById('saturdaySections').style.display = 'flex'; // 土曜日セクションを表示
+                    break;
+                default: // 日曜日 (dayOfWeek === 0)
+                    document.getElementById('weekendMessage').style.display = 'block'; // 週末メッセージを表示
+                    break;
+            }
+        }
+
+
+        // ページ読み込み時に曜日を表示し、曜日ごとのセクションを切り替える
+        window.onload = function() {
+            displayCurrentDay(); // 曜日を表示
+            showWeekdaySections(); // 曜日ごとのセクションを切り替える
+
+
+            // メニューオーバーレイがクリックされたらメニューを閉じる
+            const linearAlgebraMenuOverlay = document.getElementById('linearAlgebraMenu');
+            linearAlgebraMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === linearAlgebraMenuOverlay) {
+                    hideLinearAlgebraMenu();
+                }
+            });
+
+            // 英語理解１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const englishMenuOverlay = document.getElementById('englishMenu');
+            englishMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === englishMenuOverlay) {
+                    hideEnglishMenu();
+                }
+            });
+
+            // 数学基礎 高度メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const mathMenuOverlay = document.getElementById('mathMenu');
+            mathMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === mathMenuOverlay) {
+                    hideMathMenu();
+                }
+            });
+
+            // 言語と文化１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const languageCultureMenuOverlay = document.getElementById('languageCultureMenu');
+            languageCultureMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === languageCultureMenuOverlay) {
+                    hideLanguageCultureMenu();
+                }
+            });
+
+            // 英語表現１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const englishExpressionMenuOverlay = document.getElementById('englishExpressionMenu');
+            englishExpressionMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === englishExpressionMenuOverlay) {
+                    hideEnglishExpressionMenu();
+                }
+            });
+
+            // 日本語表現法 高度メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const japaneseExpressionMenuOverlay = document.getElementById('japaneseExpressionMenu');
+            japaneseExpressionMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === japaneseExpressionMenuOverlay) {
+                    hideJapaneseExpressionMenu();
+                }
+            });
+
+            // 学部指定科目群 1メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
+            const facultySubjectsMenuOverlay = document.getElementById('facultySubjectsMenu');
+            facultySubjectsMenuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === facultySubjectsMenuOverlay) {
+                    hideFacultySubjectsMenu();
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>
