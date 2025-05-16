@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出欠登録ページ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="outer-container">
+        <div class="day-display-container">
+            <p id="current-day"></p>
+        </div>
+        <div class="classroom-button-container">
+            <button class="classroom-entry-button" onclick="showClassroomNumberMenu()">講義室番号で出欠登録</button>
+        </div>
+        <hr class="divider">
+
+        <div id="mondaySections" class="weekday-sections">
+            <div class="content-container">
+                <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>英語理解１</h1>
+                <button class="transition-button" onclick="showEnglishMenu()">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 17:00</p>
+                </div>
+                <h1>数学基礎 高度</h1>
+                <button class="transition-button" onclick="showMathMenu()">
+                    出欠登録
+                </button>
+            </div>
+        </div>
+        <div id="tuesdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>スポーツ科学</h1>
+                <button class="transition-button grayed-out-button">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">13:00 - 15:00</p>
+                </div>
+                <h1>言語と文化１</h1>
+                <button class="transition-button" onclick="showLanguageCultureMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">15:00 - 17:00</p>
+                </div>
+                <h1>情報リテラシ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7104')">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="wednesdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">9:00 - 11:00</p>
+                </div>
+                <h1>数理・データサイエンス・AI入門 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7104')">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>英語表現１</h1>
+                <button class="transition-button" onclick="showEnglishExpressionMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 18:00</p>
+                </div>
+                <h1>情報リテラシ演習１ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103')">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="thursdaySections" class="weekday-sections">
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">10:00 - 12:00</p>
+                </div>
+                <h1>日本語表現法 高度</h1>
+                <button class="transition-button" onclick="showJapaneseExpressionMenu()">
+                    出欠登録
+                </button>
+            </div>
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">13:00 - 15:00</p>
+                </div>
+                <h1>学部指定科目群 1</h1>
+                <button class="transition-button" onclick="showFacultySubjectsMenu()">
+                    出欠登録
+                </button>
+            </div>
+            </div>
+        <div id="fridaySections" class="weekday-sections">
+            <div class="content-container">
+                <div class="left-aligned-container">
+                    <p class="course-time">9:00 - 11:00</p>
+                </div>
+                <h1>高度応用情報科学概論１ 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">11:00 - 13:00</p>
+                </div>
+                <h1>線形代数基礎 高度</h1>
+                <button class="transition-button" onclick="showLinearAlgebraMenu()">
+                    出欠登録
+                </button>
+            </div>
+
+            <div class="content-container">
+                 <div class="left-aligned-container">
+                    <p class="course-time">14:00 - 16:00</p>
+                </div>
+                <h1>初年次教育 高度</h1>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331')">
+                    出欠登録
+                </button>
+            </div>
+        </div>
+        <div id="saturdaySections" class="weekday-sections">
+            <p>該当講義なし</p>
+        </div>
+        <div id="weekendMessage" class="weekday-sections">
+             <p>該当講義なし</p>
+        </div>
+        </div>
+
+    <div id="linearAlgebraMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>線形代数基礎 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204')">偶数</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">奇数</button>
+            </div>
+
+            <button class="close-menu-button" onclick="hideLinearAlgebraMenu()">閉じる</button>
+        </div>
+    </div>
+    <div id="englishMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>英語理解１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5206')">ａクラス</button>
+                <button class="transition-button grayed-out-button">ｂクラス</button>
+                <button class="transition-button grayed-out-button">ｃクラス</button>
+                <button class="transition-button grayed-out-button">ｄクラス</button>
+                <button class="transition-button grayed-out-button">ｅクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5203')">ｆクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5204')">ｇクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideEnglishMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="mathMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>数学基礎 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7103')">ａクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7202')">ｂｃクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideMathMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="languageCultureMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>言語と文化１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307')">中国語</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">ドイツ語</button>
+                <button class="transition-button grayed-out-button">フランス語</button>
+            </div>
+            <button class="close-menu-button" onclick="hideLanguageCultureMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="englishExpressionMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>英語表現１</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button grayed-out-button">ａクラス</button>
+                <button class="transition-button grayed-out-button">ｂクラス</button>
+                <button class="transition-button grayed-out-button">ｃクラス</button>
+                <button class="transition-button grayed-out-button">ｄクラス</button>
+                <button class="transition-button grayed-out-button">ｅクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104')">ｆクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5203')">ｇクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideEnglishExpressionMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="japaneseExpressionMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>日本語表現法 高度</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button grayed-out-button">ａクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304')">ｂクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5305')">ｃクラス</button>
+            </div>
+            <button class="close-menu-button" onclick="hideJapaneseExpressionMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="facultySubjectsMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>学部指定科目群 1</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102')">倫理学</button>
+                <button class="transition-button grayed-out-button">歴史と人間</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8204')">憲法と社会</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8205')">科学技術史</button>
+                <button class="transition-button grayed-out-button">環境科学概論</button>
+                <button class="transition-button grayed-out-button">心理学</button>
+            </div>
+            <button class="close-menu-button" onclick="hideFacultySubjectsMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="classroomNumberMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>講義室番号で出欠登録</h2>
+            <input type="text" id="classroomNumberInput" placeholder="講義室番号を入力">
+            <button class="classroom-submit-button" onclick="submitClassroomNumber()">登録</button>
+            <button class="close-menu-button" onclick="hideClassroomNumberMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="developmentMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>開発メニュー</h2>
+            <div class="day-selection-grid">
+                <button onclick="setDisplayedDay(event, 1)">月曜日</button>
+                <button onclick="setDisplayedDay(event, 2)">火曜日</button>
+                <button onclick="setDisplayedDay(event, 3)">水曜日</button>
+                <button onclick="setDisplayedDay(event, 4)">木曜日</button>
+                <button onclick="setDisplayedDay(event, 5)">金曜日</button>
+                <button onclick="setDisplayedDay(event, 6)">土曜日</button>
+                <button onclick="setDisplayedDay(event, 0)">日曜日</button>
+                <button class="reset-button" onclick="resetDisplayedDay(event)">解除</button>
+            </div>
+            <button class="close-menu-button" onclick="hideDevelopmentMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
