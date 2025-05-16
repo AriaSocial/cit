@@ -1,0 +1,341 @@
+body {
+    display: flex;
+    justify-content: center; /* コンテンツ全体を中央寄せ */
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    padding: 20px; /* 余白を追加 */
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
+}
+
+/* 全体を囲む外側の枠線付きコンテナ */
+.outer-container {
+    width: 80vw; /* 画面幅の80% */
+    /* 外側枠線の色を#4168E1に変更 */
+    border: 2px solid #4168E1; /* 外側枠線のスタイル（色、太さ、種類） */
+    border-radius: 15px; /* 外側枠線の角を丸くする */
+    padding: 20px; /* 外側コンテナ内の余白 */
+    background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
+    display: flex; /* 子要素（曜日表示、区切り線、セクション）をflexboxで配置 */
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center; /* 子要素を中央寄せ */
+    text-align: center; /* テキストを中央寄せ */
+}
+
+/* 曜日表示を囲むコンテナ */
+.day-display-container {
+    width: 70vw; /* content-containerと同じ幅 */
+    text-align: center; /* 曜日表示を中央寄せ */
+    margin-bottom: 10px; /* 曜日表示とボタンの間にスペース */
+}
+
+/* 曜日を表示する要素のスタイル */
+#current-day {
+    margin: 0; /* マージンをリセット */
+    font-size: 2em; /* 曜日のフォントサイズを調整 */
+    color: #222; /* テキストカラーを黒っぽくしました */
+    font-weight: bold; /* 曜日を太字にする */
+    cursor: grab; /* スワイプ可能な要素であることを示すカーソル */
+    user-select: none; /* テキスト選択を防ぐ */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+}
+
+/* 講義室番号入力ボタンを囲むコンテナ */
+.classroom-button-container {
+    width: 70vw; /* content-containerと同じ幅 */
+    text-align: left; /* ボタンを左寄せ */
+    margin-bottom: 15px; /* ボタンと区切り線の間にスペース */
+}
+
+
+/* 講義室番号入力ボタンのスタイル */
+.classroom-entry-button {
+    padding: 8px 15px; /* パディングを小さく調整 */
+    font-size: 0.9em; /* フォントサイズを小さく調整 */
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #E5E5E5; /* 薄いグレーの背景 */
+    border: 1px solid #ccc; /* 薄いグレーの枠線 */
+    color: #333; /* テキストカラーを黒っぽく変更 */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.classroom-entry-button:hover {
+    background-color: #d0d0d0; /* ホバー時の背景色を調整 */
+    border-color: #b0b0b0; /* ホバー時の枠線色 */
+    color: #333; /*テキストカラーは維持 */
+}
+
+
+/* 区切り線のスタイル */
+.divider {
+    width: 70vw; /* 区切り線の幅 */
+    border: none; /* デフォルトのボーダーを削除 */
+    border-top: 2px solid #ccc; /* 区切り線のスタイル（色、太さ、種類） */
+    margin: 15px 0; /* 区切り線の上下の余白を調整 */
+}
+
+/* 各曜日のセクションをまとめるコンテナの基本スタイル */
+.weekday-sections {
+    display: none; /* デフォルトでは非表示 */
+    width: 100%; /* 親要素の幅に合わせる */
+    display: flex; /* 子要素をflexboxで配置 */
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center; /* 子要素を中央寄せ */
+}
+
+/* 内側のコンテンツ（テキストとボタン）を囲む枠線付きのコンテナ */
+.content-container {
+    width: 70vw; /* 画面幅の70% */
+    border: 1px solid #333; /* 内側枠線のスタイル（色、太さ、種類） */
+    border-radius: 10px; /* 内側枠線の角を丸くする */
+    padding: 25px 20px; /* コンテナ内の余白を調整 */
+    background-color: #fff; /* コンテナの背景色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影を追加 */
+    display: flex; /* 子要素をflexboxで配置 */
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center; /* 子要素（h1とbutton）を中央寄せに戻す */
+    /* text-align: center; 子要素内のテキスト配置は個別に調整 */
+    margin-bottom: 20px; /* セクション間の余白を追加 */
+}
+
+/* 各曜日の最後のcontent-containerの下マージンは不要 */
+.weekday-sections .content-container:last-child {
+     margin-bottom: 0;
+}
+
+
+/* 時間表示を含む左寄せ用のコンテナ */
+.left-aligned-container {
+    width: 100%; /* content-containerの幅に合わせる */
+    text-align: left; /* テキストを左寄せ */
+    margin-bottom: 5px; /* 時間とh1の間のスペース */
+}
+
+/* 時間表示のスタイル */
+.course-time {
+    font-size: 1.1em; /* フォントサイズを調整 */
+    color: #555;
+    margin-bottom: 0; /* 親要素でマージンを設定するため0に */
+    margin-top: 0; /* 上の要素との余白をなくす */
+}
+
+h1 {
+    margin-top: 0; /* 上の要素との余白をなくす */
+    margin-bottom: 25px; /* テキストとボタンの間にスペースを調整 */
+    color: #333;
+    font-size: 20px; /* フォントサイズを調整 */
+    margin-left: 0; /* 左マージンを削除 */
+    text-align: center; /* h1自体を中央寄せ */
+    width: 100%; /* 中央寄せのために幅を100%に */
+}
+
+.transition-button {
+    /* ボタンの角を丸くする */
+    border-radius: 10px; /* 角の丸みを調整 */
+    /* 四角い形状に合わせてパディングを調整 */
+    padding: 8px 25px; /* 上下、左右のパディングを調整 */
+    font-size: 16px; /* フォントサイズを調整 */
+    cursor: pointer;
+    border: none;
+    /* ボタンの背景色を#4168E1に変更 */
+    background-color: #4168E1;
+    /* ボタンのテキストカラー */
+    color: #FFFFFF;
+    transition: background-color 0.3s ease;
+}
+
+.transition-button:hover {
+    /* ホバー時の背景色を少し濃くする */
+    background-color: #3556b8; /* #4168E1より少し濃い色 */
+    /* ホバー時のテキストカラーは白を維持 */
+    color: #FFFFFF;
+}
+
+/* メニューオーバーレイのスタイル */
+.menu-overlay {
+    position: fixed; /* 画面全体を覆う */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+    display: none; /* デフォルトでは非表示 */
+    justify-content: center; /* メニューを中央寄せ */
+    align-items: center;
+    z-index: 1000; /* 他の要素より手前に表示 */
+}
+
+/* メニューコンテンツのスタイル */
+.menu-content {
+    background-color: #fff;
+    padding: 25px; /* パディングを小さく調整 */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 80%; /* 最大幅 */
+    display: flex; /* 子要素をflexboxで配置 */
+    flex-direction: column; /* 子要素を縦に並べる */
+    align-items: center; /* 子要素を中央寄せ */
+    /* メニューに枠線を追加 */
+    border: 1px solid #333; /* セクションの枠線と同じスタイル */
+}
+
+.menu-content h2 {
+    margin-top: 0;
+    margin-bottom: 15px; /* マージンを小さく調整 */
+    color: #333;
+    font-size: 1.2em; /* フォントサイズを調整 */
+}
+
+/* メニュー内のクラスボタンを囲むコンテナのスタイル */
+.class-buttons-grid {
+    display: grid; /* グリッドレイアウトを使用 */
+    grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
+    gap: 20px; /* ボタン間の隙間を小さく調整 */
+    margin-bottom: 15px; /* ボタンと閉じるボタンの間のスペースを小さく調整 */
+    width: 100%; /* 親要素の幅に合わせる */
+}
+
+
+/* メニュー内の一般的なボタンのスタイル（閉じるボタン以外） */
+/* close-menu-button および reset-button 以外のボタンに適用 */
+.menu-content button:not(.close-menu-button):not(.reset-button) {
+    margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+    padding: 8px 15px; /* パディングを小さく調整 */
+    font-size: 0.9em; /* フォントサイズを小さく調整 */
+    cursor: pointer;
+    /* ボタンの角を10px丸くしました */
+    border-radius: 8px; /* 角の丸みを小さく調整 */
+    /* デフォルトの青色背景 */
+    background-color: #4168E1;
+    border: none;
+    color: white; /* テキストカラーを白に */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100%; /* グリッドセルに合わせて幅を100%に */
+}
+
+.menu-content button:not(.close-menu-button):not(.reset-button):hover {
+     background-color: #3556b8; /* ホバー時の背景色 */
+     color: white; /* ホバー時のテキストカラー */
+}
+
+/* 閉じるボタンのスタイルを個別に指定 */
+.close-menu-button {
+    margin: 10px; /* マージンは維持 */
+    padding: 8px 15px; /* メニュー内の他のボタンと同じパディング */
+    font-size: 0.9em; /* メニュー内の他のボタンと同じフォントサイズ */
+    cursor: pointer;
+    border-radius: 5px; /* 角丸は元のまま */
+    /* 閉じるボタンの背景色を#E5E5E5に変更 */
+    background-color: #E5E5E5; /* 薄いグレーの背景に戻す */
+    /* 閉じるボタンの枠線スタイル */
+    border: 1px solid #ccc; /* 薄いグレーの枠線に戻す */
+    /* 閉じるボタンのテキストカラーを黒っぽく変更 */
+    color: #333; /* テキストカラーを黒っぽく戻す */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* ホバー時のトランジションを調整 */
+    width: 80%; /* 幅を調整 */
+}
+
+.close-menu-button:hover {
+    /* 閉じるボタンのホバー時の背景色を調整 */
+    background-color: #d0d0d0; /* #E5E5E5より少し濃い色 */
+    border-color: #b0b0b0; /* ホバー時の枠線色 */
+    color: #333; /*テキストカラーは維持 */
+}
+
+ /* 開発メニュー内の「解除」ボタンのスタイル */
+.reset-button {
+    /* .day-selection-grid button のスタイルを継承 */
+    margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+    padding: 8px 15px; /* パディングを小さく調整 */
+    font-size: 0.9em; /* フォントサイズを小さく調整 */
+    cursor: pointer;
+    border-radius: 8px; /* 角の丸みを小さく調整 */
+    width: 100%; /* グリッドセルに合わせて幅を100%に */
+    text-align: center; /* テキスト中央寄せ */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* ホバー時のトランジションを調整 */
+
+    /* 薄いグレーの背景に変更 */
+    background-color: #E5E5E5;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+.reset-button:hover {
+    /* ホバー時の背景色を調整 */
+    background-color: #d0d0d0; /* #E5E5E5より少し濃い色 */
+    border-color: #b0b0b0; /* ホバー時の枠線色 */
+    color: #333; /*テキストカラーは維持 */
+}
+
+
+/* グレーアウトされたボタンのスタイル */
+.grayed-out-button {
+    background-color: #e0e0e0 !important; /* 薄いグレーの背景 */
+    color: #a0a0a0 !important; /* グレーのテキスト */
+    cursor: not-allowed !important; /* カーソルを禁止マークに */
+    pointer-events: none; /* クリックイベントを無効化 */
+}
+
+/* 講義室番号入力メニュー内の入力フィールド */
+#classroomNumberInput {
+    padding: 8px; /* パディングを小さく調整 */
+    margin-bottom: 15px; /* マージンを小さく調整 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 80%; /* 幅を調整 */
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
+}
+
+/* 講義室番号入力メニュー内の登録ボタン */
+.classroom-submit-button {
+     /* 青色ボタンのスタイルをコピー */
+    padding: 8px 15px; /* パディングを小さく調整 */
+    font-size: 0.9em; /* フォントサイズを小さく調整 */
+    cursor: pointer;
+    border-radius: 8px; /* 角の丸みを小さく調整 */
+    background-color: #4168E1;
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 80%; /* 幅を調整 */
+}
+
+ .classroom-submit-button:hover {
+     background-color: #3556b8; /* ホバー時の背景色 */
+     color: white; /* ホバー時のテキストカラー */
+}
+
+/* 開発メニュー内の曜日選択ボタンを囲むコンテナ */
+.day-selection-grid {
+    display: grid; /* グリッドレイアウトを使用 */
+    grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
+    gap: 20px; /* ボタン間の隙間を他のメニューに合わせる */
+    margin-bottom: 20px; /* ボタンと閉じるボタンの間のスペース */
+    width: 100%; /* 親要素の幅に合わせる */
+}
+
+/* 開発メニュー内の曜日選択ボタンのスタイル */
+.day-selection-grid button {
+    margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+    padding: 8px 15px; /* パディングを小さく調整 */
+    font-size: 0.9em; /* フォントサイズを小さく調整 */
+    cursor: pointer;
+    border-radius: 8px; /* 角の丸みを小さく調整 */
+    background-color: #4168E1; /* 青色背景 */
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center; /* テキスト中央寄せ */
+    width: 100%; /* グリッドセルに合わせて幅を100%に */
+}
+
+.day-selection-grid button:hover {
+    background-color: #3556b8; /* ホバー時の背景色 */
+    color: white;
+}
