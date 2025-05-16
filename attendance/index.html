@@ -767,14 +767,16 @@
         function setDisplayedDay(day) {
             // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
             showWeekdaySections(day); // セクション表示を更新
-            hideDevelopmentMenu(); // 開発メニューを閉じる
+            // メニューを閉じる処理に遅延を追加
+            setTimeout(hideDevelopmentMenu, 50); // 50ミリ秒の遅延
         }
 
         // 表示を今日の曜日に戻す関数
         function resetDisplayedDay() {
             // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
             showWeekdaySections(); // セクション表示を今日の曜日に戻す
-            hideDevelopmentMenu(); // 開発メニューを閉じる
+            // メニューを閉じる処理に遅延を追加
+            setTimeout(hideDevelopmentMenu, 50); // 50ミリ秒の遅延
         }
 
 
