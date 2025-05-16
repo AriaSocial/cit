@@ -25,7 +25,7 @@
             padding: 20px; /* 外側コンテナ内の余白 */
             background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
-            display: flex; /* 子要素（ヘッダー、ボタン、区切り線、セクション）をflexboxで配置 */
+            display: flex; /* 子要素（曜日表示、区切り線、セクション）をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素を中央寄せ */
             text-align: center; /* テキストを中央寄せ */
@@ -45,6 +45,9 @@
             color: #222; /* テキストカラーを黒っぽくしました */
             font-weight: bold; /* 曜日を太字にする */
             cursor: grab; /* スワイプ可能な要素であることを示すカーソル */
+            user-select: none; /* テキスト選択を防ぐ */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
         }
 
         /* 講義室番号入力ボタンを囲むコンテナ */
@@ -206,7 +209,8 @@
 
 
         /* メニュー内の一般的なボタンのスタイル（閉じるボタン以外） */
-        .menu-content button:not(.close-menu-button) {
+        /* close-menu-button および reset-button 以外のボタンに適用 */
+        .menu-content button:not(.close-menu-button):not(.reset-button) {
             margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
             padding: 8px 15px; /* パディングを小さく調整 */
             font-size: 0.9em; /* フォントサイズを小さく調整 */
@@ -221,7 +225,7 @@
             width: 100%; /* グリッドセルに合わせて幅を100%に */
         }
 
-        .menu-content button:not(.close-menu-button):hover {
+        .menu-content button:not(.close-menu-button):not(.reset-button):hover {
              background-color: #3556b8; /* ホバー時の背景色 */
              color: white; /* ホバー時のテキストカラー */
         }
@@ -249,6 +253,32 @@
             border-color: #b0b0b0; /* ホバー時の枠線色 */
             color: #333; /*テキストカラーは維持 */
         }
+
+         /* 開発メニュー内の「解除」ボタンのスタイル */
+        .reset-button {
+            /* .day-selection-grid button のスタイルを継承 */
+            margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+            padding: 8px 15px; /* パディングを小さく調整 */
+            font-size: 0.9em; /* フォントサイズを小さく調整 */
+            cursor: pointer;
+            border-radius: 8px; /* 角の丸みを小さく調整 */
+            width: 100%; /* グリッドセルに合わせて幅を100%に */
+            text-align: center; /* テキスト中央寄せ */
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* ホバー時のトランジションを調整 */
+
+            /* 薄いグレーの背景に変更 */
+            background-color: #E5E5E5;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+
+        .reset-button:hover {
+            /* ホバー時の背景色を調整 */
+            background-color: #d0d0d0; /* #E5E5E5より少し濃い色 */
+            border-color: #b0b0b0; /* ホバー時の枠線色 */
+            color: #333; /*テキストカラーは維持 */
+        }
+
 
         /* グレーアウトされたボタンのスタイル */
         .grayed-out-button {
@@ -287,6 +317,36 @@
              background-color: #3556b8; /* ホバー時の背景色 */
              color: white; /* ホバー時のテキストカラー */
         }
+
+        /* 開発メニュー内の曜日選択ボタンを囲むコンテナ */
+        .day-selection-grid {
+            display: grid; /* グリッドレイアウトを使用 */
+            grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
+            gap: 20px; /* ボタン間の隙間を他のメニューに合わせる */
+            margin-bottom: 20px; /* ボタンと閉じるボタンの間のスペース */
+            width: 100%; /* 親要素の幅に合わせる */
+        }
+
+        /* 開発メニュー内の曜日選択ボタンのスタイル */
+        .day-selection-grid button {
+            margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
+            padding: 8px 15px; /* パディングを小さく調整 */
+            font-size: 0.9em; /* フォントサイズを小さく調整 */
+            cursor: pointer;
+            border-radius: 8px; /* 角の丸みを小さく調整 */
+            background-color: #4168E1; /* 青色背景 */
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            text-align: center; /* テキスト中央寄せ */
+            width: 100%; /* グリッドセルに合わせて幅を100%に */
+        }
+
+        .day-selection-grid button:hover {
+            background-color: #3556b8; /* ホバー時の背景色 */
+            color: white;
+        }
+
 
     </style>
 </head>
@@ -523,10 +583,10 @@
             <div class="class-buttons-grid">
                 <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102')">倫理学</button>
                 <button class="transition-button grayed-out-button">歴史と人間</button>
-                <button class="transition-button grayed-out-button">心理学</button>
                 <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8204')">憲法と社会</button>
                 <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8205')">科学技術史</button>
                 <button class="transition-button grayed-out-button">環境科学概論</button>
+                <button class="transition-button grayed-out-button">心理学</button>
             </div>
             <button class="close-menu-button" onclick="hideFacultySubjectsMenu()">閉じる</button>
         </div>
@@ -544,6 +604,16 @@
     <div id="developmentMenu" class="menu-overlay">
         <div class="menu-content">
             <h2>開発メニュー</h2>
+            <div class="day-selection-grid">
+                <button onclick="setDisplayedDay(1)">月曜日</button>
+                <button onclick="setDisplayedDay(2)">火曜日</button>
+                <button onclick="setDisplayedDay(3)">水曜日</button>
+                <button onclick="setDisplayedDay(4)">木曜日</button>
+                <button onclick="setDisplayedDay(5)">金曜日</button>
+                <button onclick="setDisplayedDay(6)">土曜日</button>
+                <button onclick="setDisplayedDay(0)">日曜日</button>
+                <button class="reset-button" onclick="resetDisplayedDay()">解除</button>
+            </div>
             <button class="close-menu-button" onclick="hideDevelopmentMenu()">閉じる</button>
         </div>
     </div>
@@ -561,13 +631,14 @@
         }
 
         // 現在の曜日を取得して表示する関数
+        // この関数は常に今日の曜日を表示します
         function displayCurrentDay() {
             const days = ['日', '月', '火', '水', '木', '金', '土'];
             const today = new Date();
-            const dayOfWeek = days[today.getDay()];
+            const dayOfWeek = today.getDay(); // 今日の曜日を取得
             const dayElement = document.getElementById('current-day');
             // 表示テキストを「X曜日」の形式に変更
-            dayElement.textContent = `${dayOfWeek}曜日`;
+            dayElement.textContent = `${days[dayOfWeek]}曜日`;
         }
 
         // 線形代数基礎メニューを表示する関数
@@ -692,18 +763,34 @@
             menu.style.display = 'none'; // メニューを非表示
         }
 
+        // 表示する曜日を設定し、セクション表示を更新する関数
+        function setDisplayedDay(day) {
+            // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
+            showWeekdaySections(day); // セクション表示を更新
+            hideDevelopmentMenu(); // 開発メニューを閉じる
+        }
+
+        // 表示を今日の曜日に戻す関数
+        function resetDisplayedDay() {
+            // displayCurrentDay(); // 曜日表示は常に今日の曜日を表示するため、ここでは呼び出さない
+            showWeekdaySections(); // セクション表示を今日の曜日に戻す
+            hideDevelopmentMenu(); // 開発メニューを閉じる
+        }
+
 
         // 曜日ごとのセクションを表示する関数
-        function showWeekdaySections() {
+        // dayToShowが指定された場合はその曜日のセクションを表示、それ以外は現在の曜日のセクションを表示
+        function showWeekdaySections(dayToShow) {
             const today = new Date();
-            const dayOfWeek = today.getDay(); // 曜日を取得 (0=日, 1=月, ..., 5=金, 6=土)
+            // dayToShowが指定されていればその曜日を使用、そうでなければ現在の曜日を使用
+            const dayOfWeek = (dayToShow !== undefined) ? dayToShow : today.getDay();
 
             // 全ての曜日セクションと週末メッセージを非表示にする
             document.querySelectorAll('.weekday-sections').forEach(section => {
                 section.style.display = 'none';
             });
 
-            // 現在の曜日に対応するセクションを表示する
+            // 指定された曜日または現在の曜日に対応するセクションを表示する
             switch (dayOfWeek) {
                 case 1: // 月曜日
                     document.getElementById('mondaySections').style.display = 'flex';
@@ -729,43 +816,88 @@
             }
         }
 
-        // スワイプ検出のための変数
+        // スワイプ検出のための変数 (タッチ用)
         let touchstartX = 0;
         let touchendX = 0;
         const swipeThreshold = 50; // スワイプと判定するための最小距離 (px)
 
+        // スワイプ検出のための変数 (マウス用)
+        let mousestartX = 0;
+        let mouseIsDown = false; // マウスが押されているかどうかのフラグ
+
         // 曜日表示要素を取得
         const currentDayElement = document.getElementById('current-day');
 
-        // タッチ開始時の座標を記録
+        // --- タッチイベントリスナー ---
         currentDayElement.addEventListener('touchstart', function(event) {
             touchstartX = event.changedTouches[0].screenX;
         }, false);
 
-        // タッチ終了時の座標を記録し、スワイプ判定
         currentDayElement.addEventListener('touchend', function(event) {
             touchendX = event.changedTouches[0].screenX;
-            handleGesture();
+            handleTouchGesture();
         }, false);
 
-        // スワイプジェスチャーを処理する関数
-        function handleGesture() {
+        // --- マウスイベントリスナー ---
+        currentDayElement.addEventListener('mousedown', function(event) {
+            mousestartX = event.screenX;
+            mouseIsDown = true; // マウスが押された
+        }, false);
+
+        // mousemoveはdrag中にのみ検出したいが、ここではmouseupで判定するため不要
+        // currentDayElement.addEventListener('mousemove', function(event) {
+        //     if (!mouseIsDown) return;
+        //     // ドラッグ中の処理が必要な場合はここに追加
+        // }, false);
+
+        currentDayElement.addEventListener('mouseup', function(event) {
+            if (!mouseIsDown) return; // マウスが押されていなければ何もしない
+            const mouseendX = event.screenX;
+            mouseIsDown = false; // マウスが離された
+            handleMouseGesture(mousestartX, mouseendX);
+        }, false);
+
+        // マウスが要素の外で離された場合も考慮 (任意)
+        // document.addEventListener('mouseup', function(event) {
+        //     if (mouseIsDown) {
+        //         const mouseendX = event.screenX;
+        //         mouseIsDown = false;
+        //         handleMouseGesture(mousestartX, mouseendX);
+        //     }
+        // }, false);
+
+
+        // タッチスワイプジェスチャーを処理する関数
+        function handleTouchGesture() {
             // 右方向へのスワイプ（開始座標より終了座標が大きい）で、かつ一定距離以上の移動がある場合
             if (touchendX > touchstartX && touchendX - touchstartX > swipeThreshold) {
-                console.log('Right swipe detected!'); // 開発者向けコンソールに表示
+                console.log('Right touch swipe detected!'); // 開発者向けコンソールに表示
                 showDevelopmentMenu(); // 開発メニューを表示
             }
-            // 左方向へのスワイプ（開始座標より終了座標が小さい）で、かつ一定距離以上の移動がある場合
+            // 左方向へのスワイプ（必要に応じて追加）
             // else if (touchendX < touchstartX && touchstartX - touchendX > swipeThreshold) {
-            //     console.log('Left swipe detected!'); // 必要に応じて左スワイプの処理を追加
+            //     console.log('Left touch swipe detected!');
+            // }
+        }
+
+        // マウススワイプジェスチャーを処理する関数
+        function handleMouseGesture(startX, endX) {
+             // 右方向へのスワイプ（開始座標より終了座標が大きい）で、かつ一定距離以上の移動がある場合
+            if (endX > startX && endX - startX > swipeThreshold) {
+                console.log('Right mouse swipe detected!'); // 開発者向けコンソールに表示
+                showDevelopmentMenu(); // 開発メニューを表示
+            }
+            // 左方向へのスワイプ（必要に応じて追加）
+            // else if (endX < startX && startX - endX > swipeThreshold) {
+            //     console.log('Left mouse swipe detected!');
             // }
         }
 
 
         // ページ読み込み時に曜日を表示し、曜日ごとのセクションを切り替える
         window.onload = function() {
-            displayCurrentDay(); // 曜日を表示
-            showWeekdaySections(); // 曜日ごとのセクションを切り替える
+            displayCurrentDay(); // 曜日を表示 (常に今日の曜日)
+            showWeekdaySections(); // 曜日ごとのセクションを切り替える (デフォルトは今日の曜日)
 
 
             // 各メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナー
