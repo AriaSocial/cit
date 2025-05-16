@@ -19,8 +19,8 @@
         /* 全体を囲む外側の枠線付きコンテナ */
         .outer-container {
             width: 80vw; /* 画面幅の80% */
-            /* 外側枠線の色を出欠ボタンと同じ#005882に変更 */
-            border: 2px solid #005882; /* 外側枠線のスタイル（色、太さ、種類） */
+            /* 外側枠線の色を#4168E1に変更 */
+            border: 2px solid #4168E1; /* 外側枠線のスタイル（色、太さ、種類） */
             border-radius: 15px; /* 外側枠線の角を丸くする */
             padding: 20px; /* 外側コンテナ内の余白 */
             background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
@@ -103,8 +103,8 @@
             font-size: 16px;
             cursor: pointer;
             border: none;
-            /* ボタンの背景色 */
-            background-color: #005882;
+            /* ボタンの背景色を#4168E1に変更 */
+            background-color: #4168E1;
             /* ボタンのテキストカラー */
             color: #FFFFFF;
             transition: background-color 0.3s ease;
@@ -112,10 +112,77 @@
 
         .transition-button:hover {
             /* ホバー時の背景色を少し濃くする */
-            background-color: #004a6b; /* #005882より少し濃い色 */
+            background-color: #3556b8; /* #4168E1より少し濃い色 */
             /* ホバー時のテキストカラーは白を維持 */
             color: #FFFFFF;
         }
+
+        /* メニューオーバーレイのスタイル */
+        .menu-overlay {
+            position: fixed; /* 画面全体を覆う */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+            display: none; /* デフォルトでは非表示 */
+            justify-content: center; /* メニューを中央寄せ */
+            align-items: center;
+            z-index: 1000; /* 他の要素より手前に表示 */
+        }
+
+        /* メニューコンテンツのスタイル */
+        .menu-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 80%; /* 最大幅 */
+        }
+
+        .menu-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* メニュー内の一般的なボタンのスタイル */
+        .menu-content button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4168E1; /* デフォルトの青色 */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-content button:hover {
+             background-color: #3556b8; /* デフォルトのホバー色 */
+        }
+
+        /* 閉じるボタンのスタイルを個別に指定に関するCSSは削除しました */
+        /*
+        .close-menu-button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #E5E5E5;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-menu-button:hover {
+            background-color: #d0d0d0;
+            color: #333;
+        }
+        */
     </style>
 </head>
 <body>
@@ -142,7 +209,7 @@
             </div>
             <h1>線形代数基礎 高度</h1>
 
-            <button class="transition-button" onclick="openNewWindow('')">
+            <button class="transition-button" onclick="showLinearAlgebraMenu()">
                 出欠登録
             </button>
         </div>
@@ -159,8 +226,17 @@
         </div>
     </div>
 
+    <div id="linearAlgebraMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>線形代数基礎 高度 メニュー</h2>
+            <p>メニュー項目をここに表示します。</p>
+            <button onclick="hideLinearAlgebraMenu()">閉じる</button>
+            </div>
+    </div>
+
+
     <script>
-        // ボタンがクリックされたときに実行される関数
+        // ボタンがクリックされたときに実行される関数（URL遷移用）
         function openNewWindow(urlToOpen) {
             // 別ウィンドウ（新しいタブ）でURLを開く
             // URLが空の場合は何もしないか、エラーメッセージを表示することも可能
@@ -182,9 +258,30 @@
             dayElement.textContent = `${dayOfWeek}曜日`;
         }
 
+        // 線形代数基礎メニューを表示する関数
+        function showLinearAlgebraMenu() {
+            const menu = document.getElementById('linearAlgebraMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 線形代数基礎メニューを非表示にする関数
+        function hideLinearAlgebraMenu() {
+            const menu = document.getElementById('linearAlgebraMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
         // ページ読み込み時に曜日を表示
         window.onload = function() {
             displayCurrentDay(); // 曜日を表示
+
+            // メニューオーバーレイがクリックされたらメニューを閉じる
+            const menuOverlay = document.getElementById('linearAlgebraMenu');
+            menuOverlay.addEventListener('click', function(event) {
+                // メニューコンテンツ自体をクリックした場合は閉じない
+                if (event.target === menuOverlay) {
+                    hideLinearAlgebraMenu();
+                }
+            });
         };
     </script>
 
