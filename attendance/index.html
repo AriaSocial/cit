@@ -25,20 +25,54 @@
             padding: 20px; /* 外側コンテナ内の余白 */
             background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 影を追加 */
-            display: flex; /* 子要素（曜日表示、区切り線、セクション）をflexboxで配置 */
+            display: flex; /* 子要素（ヘッダー、ボタン、区切り線、セクション）をflexboxで配置 */
             flex-direction: column; /* 子要素を縦に並べる */
             align-items: center; /* 子要素を中央寄せ */
             text-align: center; /* テキストを中央寄せ */
         }
 
+        /* 曜日表示を囲むコンテナ */
+        .day-display-container {
+            width: 70vw; /* content-containerと同じ幅 */
+            text-align: center; /* 曜日表示を中央寄せ */
+            margin-bottom: 10px; /* 曜日表示とボタンの間にスペース */
+        }
+
         /* 曜日を表示する要素のスタイル */
         #current-day {
-            margin-top: 0; /* 外側コンテナ上部の余白をなくす */
-            margin-bottom: 20px; /* 曜日と区切り線の間にスペースを調整 */
+            margin: 0; /* マージンをリセット */
             font-size: 2em; /* 曜日のフォントサイズを調整 */
             color: #222; /* テキストカラーを黒っぽくしました */
             font-weight: bold; /* 曜日を太字にする */
+            cursor: grab; /* スワイプ可能な要素であることを示すカーソル */
         }
+
+        /* 講義室番号入力ボタンを囲むコンテナ */
+        .classroom-button-container {
+            width: 70vw; /* content-containerと同じ幅 */
+            text-align: left; /* ボタンを左寄せ */
+            margin-bottom: 15px; /* ボタンと区切り線の間にスペース */
+        }
+
+
+        /* 講義室番号入力ボタンのスタイル */
+        .classroom-entry-button {
+            padding: 8px 15px; /* パディングを小さく調整 */
+            font-size: 0.9em; /* フォントサイズを小さく調整 */
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #E5E5E5; /* 薄いグレーの背景 */
+            border: 1px solid #ccc; /* 薄いグレーの枠線 */
+            color: #333; /* テキストカラーを黒っぽく変更 */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .classroom-entry-button:hover {
+            background-color: #d0d0d0; /* ホバー時の背景色を調整 */
+            border-color: #b0b0b0; /* ホバー時の枠線色 */
+            color: #333; /*テキストカラーは維持 */
+        }
+
 
         /* 区切り線のスタイル */
         .divider {
@@ -105,10 +139,10 @@
 
         .transition-button {
             /* ボタンの角を丸くする */
-            border-radius: 10px; /* 角の丸みの大きさを調整 */
+            border-radius: 10px; /* 角の丸みを調整 */
             /* 四角い形状に合わせてパディングを調整 */
-            padding: 8px 25px; /* 上下、左右のパディングを小さく調整 */
-            font-size: 16px;
+            padding: 8px 25px; /* 上下、左右のパディングを調整 */
+            font-size: 16px; /* フォントサイズを調整 */
             cursor: pointer;
             border: none;
             /* ボタンの背景色を#4168E1に変更 */
@@ -142,7 +176,7 @@
         /* メニューコンテンツのスタイル */
         .menu-content {
             background-color: #fff;
-            padding: 30px;
+            padding: 25px; /* パディングを小さく調整 */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -156,16 +190,17 @@
 
         .menu-content h2 {
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* マージンを小さく調整 */
             color: #333;
+            font-size: 1.2em; /* フォントサイズを調整 */
         }
 
         /* メニュー内のクラスボタンを囲むコンテナのスタイル */
         .class-buttons-grid {
             display: grid; /* グリッドレイアウトを使用 */
             grid-template-columns: repeat(2, 1fr); /* 2列で、各列の幅は均等 */
-            gap: 25px; /* ボタン間の隙間 */
-            margin-bottom: 20px; /* ボタンと閉じるボタンの間のスペース */
+            gap: 20px; /* ボタン間の隙間を小さく調整 */
+            margin-bottom: 15px; /* ボタンと閉じるボタンの間のスペースを小さく調整 */
             width: 100%; /* 親要素の幅に合わせる */
         }
 
@@ -173,14 +208,14 @@
         /* メニュー内の一般的なボタンのスタイル（閉じるボタン以外） */
         .menu-content button:not(.close-menu-button) {
             margin: 0; /* グリッドのgapで余白を調整するためマージンを0に */
-            padding: 10px 20px;
-            font-size: 1em;
+            padding: 8px 15px; /* パディングを小さく調整 */
+            font-size: 0.9em; /* フォントサイズを小さく調整 */
             cursor: pointer;
             /* ボタンの角を10px丸くしました */
-            border-radius: 10px;
+            border-radius: 8px; /* 角の丸みを小さく調整 */
             /* デフォルトの青色背景 */
             background-color: #4168E1;
-            border: none; /* ボーダーを削除 */
+            border: none;
             color: white; /* テキストカラーを白に */
             transition: background-color 0.3s ease, color 0.3s ease;
             width: 100%; /* グリッドセルに合わせて幅を100%に */
@@ -193,19 +228,19 @@
 
         /* 閉じるボタンのスタイルを個別に指定 */
         .close-menu-button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1em;
+            margin: 10px; /* マージンは維持 */
+            padding: 8px 15px; /* メニュー内の他のボタンと同じパディング */
+            font-size: 0.9em; /* メニュー内の他のボタンと同じフォントサイズ */
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 5px; /* 角丸は元のまま */
             /* 閉じるボタンの背景色を#E5E5E5に変更 */
-            background-color: #E5E5E5;
+            background-color: #E5E5E5; /* 薄いグレーの背景に戻す */
             /* 閉じるボタンの枠線スタイル */
-            border: 1px solid #ccc; /* 薄いグレーの枠線 */
+            border: 1px solid #ccc; /* 薄いグレーの枠線に戻す */
             /* 閉じるボタンのテキストカラーを黒っぽく変更 */
-            color: #333;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-            width: 80%; /* ボタンの幅を調整（必要に応じて） */
+            color: #333; /* テキストカラーを黒っぽく戻す */
+            transition: background-color 0.3s ease, border-color 0.3s ease; /* ホバー時のトランジションを調整 */
+            width: 80%; /* 幅を調整 */
         }
 
         .close-menu-button:hover {
@@ -222,13 +257,48 @@
             cursor: not-allowed !important; /* カーソルを禁止マークに */
             pointer-events: none; /* クリックイベントを無効化 */
         }
+
+        /* 講義室番号入力メニュー内の入力フィールド */
+        #classroomNumberInput {
+            padding: 8px; /* パディングを小さく調整 */
+            margin-bottom: 15px; /* マージンを小さく調整 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 80%; /* 幅を調整 */
+            box-sizing: border-box; /* パディングとボーダーを幅に含める */
+        }
+
+        /* 講義室番号入力メニュー内の登録ボタン */
+        .classroom-submit-button {
+             /* 青色ボタンのスタイルをコピー */
+            padding: 8px 15px; /* パディングを小さく調整 */
+            font-size: 0.9em; /* フォントサイズを小さく調整 */
+            cursor: pointer;
+            border-radius: 8px; /* 角の丸みを小さく調整 */
+            background-color: #4168E1;
+            border: none;
+            color: white;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 80%; /* 幅を調整 */
+        }
+
+         .classroom-submit-button:hover {
+             background-color: #3556b8; /* ホバー時の背景色 */
+             color: white; /* ホバー時のテキストカラー */
+        }
+
     </style>
 </head>
 <body>
 
     <div class="outer-container">
-        <p id="current-day"></p>
-
+        <div class="day-display-container">
+            <p id="current-day"></p>
+        </div>
+        <div class="classroom-button-container">
+            <button class="classroom-entry-button" onclick="showClassroomNumberMenu()">講義室番号で出欠登録</button>
+        </div>
         <hr class="divider">
 
         <div id="mondaySections" class="weekday-sections">
@@ -461,6 +531,22 @@
             <button class="close-menu-button" onclick="hideFacultySubjectsMenu()">閉じる</button>
         </div>
     </div>
+
+    <div id="classroomNumberMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>講義室番号で出欠登録</h2>
+            <input type="text" id="classroomNumberInput" placeholder="講義室番号を入力">
+            <button class="classroom-submit-button" onclick="submitClassroomNumber()">登録</button>
+            <button class="close-menu-button" onclick="hideClassroomNumberMenu()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="developmentMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>開発メニュー</h2>
+            <button class="close-menu-button" onclick="hideDevelopmentMenu()">閉じる</button>
+        </div>
+    </div>
     <script>
         // ボタンがクリックされたときに実行される関数（URL遷移用）
         function openNewWindow(urlToOpen) {
@@ -568,6 +654,44 @@
             menu.style.display = 'none'; // メニューを非表示
         }
 
+        // 講義室番号入力メニューを表示する関数を追加
+        function showClassroomNumberMenu() {
+            const menu = document.getElementById('classroomNumberMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 講義室番号入力メニューを非表示にする関数を追加
+        function hideClassroomNumberMenu() {
+            const menu = document.getElementById('classroomNumberMenu');
+            menu.style.display = 'none'; // メニューを非表示
+             // 入力フィールドをクリア
+            document.getElementById('classroomNumberInput').value = '';
+        }
+
+        // 講義室番号を送信する関数
+        function submitClassroomNumber() {
+            const classroomNumber = document.getElementById('classroomNumberInput').value;
+            if (classroomNumber) {
+                const url = `https://attendance.is.it-chiba.ac.jp/attendance/class_room/${classroomNumber}`;
+                openNewWindow(url); // 指定されたURLを開く
+                hideClassroomNumberMenu(); // メニューを閉じる
+            } else {
+                alert('講義室番号を入力してください。'); // 番号が入力されていない場合
+            }
+        }
+
+        // 開発メニューを表示する関数
+        function showDevelopmentMenu() {
+            const menu = document.getElementById('developmentMenu');
+            menu.style.display = 'flex'; // メニューを表示
+        }
+
+        // 開発メニューを非表示にする関数
+        function hideDevelopmentMenu() {
+            const menu = document.getElementById('developmentMenu');
+            menu.style.display = 'none'; // メニューを非表示
+        }
+
 
         // 曜日ごとのセクションを表示する関数
         function showWeekdaySections() {
@@ -605,6 +729,38 @@
             }
         }
 
+        // スワイプ検出のための変数
+        let touchstartX = 0;
+        let touchendX = 0;
+        const swipeThreshold = 50; // スワイプと判定するための最小距離 (px)
+
+        // 曜日表示要素を取得
+        const currentDayElement = document.getElementById('current-day');
+
+        // タッチ開始時の座標を記録
+        currentDayElement.addEventListener('touchstart', function(event) {
+            touchstartX = event.changedTouches[0].screenX;
+        }, false);
+
+        // タッチ終了時の座標を記録し、スワイプ判定
+        currentDayElement.addEventListener('touchend', function(event) {
+            touchendX = event.changedTouches[0].screenX;
+            handleGesture();
+        }, false);
+
+        // スワイプジェスチャーを処理する関数
+        function handleGesture() {
+            // 右方向へのスワイプ（開始座標より終了座標が大きい）で、かつ一定距離以上の移動がある場合
+            if (touchendX > touchstartX && touchendX - touchstartX > swipeThreshold) {
+                console.log('Right swipe detected!'); // 開発者向けコンソールに表示
+                showDevelopmentMenu(); // 開発メニューを表示
+            }
+            // 左方向へのスワイプ（開始座標より終了座標が小さい）で、かつ一定距離以上の移動がある場合
+            // else if (touchendX < touchstartX && touchstartX - touchendX > swipeThreshold) {
+            //     console.log('Left swipe detected!'); // 必要に応じて左スワイプの処理を追加
+            // }
+        }
+
 
         // ページ読み込み時に曜日を表示し、曜日ごとのセクションを切り替える
         window.onload = function() {
@@ -612,67 +768,24 @@
             showWeekdaySections(); // 曜日ごとのセクションを切り替える
 
 
-            // メニューオーバーレイがクリックされたらメニューを閉じる
-            const linearAlgebraMenuOverlay = document.getElementById('linearAlgebraMenu');
-            linearAlgebraMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === linearAlgebraMenuOverlay) {
-                    hideLinearAlgebraMenu();
-                }
-            });
-
-            // 英語理解１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const englishMenuOverlay = document.getElementById('englishMenu');
-            englishMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === englishMenuOverlay) {
-                    hideEnglishMenu();
-                }
-            });
-
-            // 数学基礎 高度メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const mathMenuOverlay = document.getElementById('mathMenu');
-            mathMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === mathMenuOverlay) {
-                    hideMathMenu();
-                }
-            });
-
-            // 言語と文化１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const languageCultureMenuOverlay = document.getElementById('languageCultureMenu');
-            languageCultureMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === languageCultureMenuOverlay) {
-                    hideLanguageCultureMenu();
-                }
-            });
-
-            // 英語表現１メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const englishExpressionMenuOverlay = document.getElementById('englishExpressionMenu');
-            englishExpressionMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === englishExpressionMenuOverlay) {
-                    hideEnglishExpressionMenu();
-                }
-            });
-
-            // 日本語表現法 高度メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const japaneseExpressionMenuOverlay = document.getElementById('japaneseExpressionMenu');
-            japaneseExpressionMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === japaneseExpressionMenuOverlay) {
-                    hideJapaneseExpressionMenu();
-                }
-            });
-
-            // 学部指定科目群 1メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナーを追加
-            const facultySubjectsMenuOverlay = document.getElementById('facultySubjectsMenu');
-            facultySubjectsMenuOverlay.addEventListener('click', function(event) {
-                // メニューコンテンツ自体をクリックした場合は閉じない
-                if (event.target === facultySubjectsMenuOverlay) {
-                    hideFacultySubjectsMenu();
-                }
+            // 各メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナー
+            const menuOverlays = document.querySelectorAll('.menu-overlay');
+            menuOverlays.forEach(overlay => {
+                overlay.addEventListener('click', function(event) {
+                    // メニューコンテンツ自体をクリックした場合は閉じない
+                    if (event.target === overlay) {
+                        // クリックされたオーバーレイのIDに応じて適切な非表示関数を呼び出す
+                        if (overlay.id === 'linearAlgebraMenu') hideLinearAlgebraMenu();
+                        else if (overlay.id === 'englishMenu') hideEnglishMenu();
+                        else if (overlay.id === 'mathMenu') hideMathMenu();
+                        else if (overlay.id === 'languageCultureMenu') hideLanguageCultureMenu();
+                        else if (overlay.id === 'englishExpressionMenu') hideEnglishExpressionMenu();
+                        else if (overlay.id === 'japaneseExpressionMenu') hideJapaneseExpressionMenu();
+                        else if (overlay.id === 'facultySubjectsMenu') hideFacultySubjectsMenu();
+                        else if (overlay.id === 'classroomNumberMenu') hideClassroomNumberMenu();
+                        else if (overlay.id === 'developmentMenu') hideDevelopmentMenu(); // 開発メニューの非表示も追加
+                    }
+                });
             });
         };
     </script>
