@@ -44,7 +44,7 @@
                     <p class="course-time">11:00 - 13:00</p>
                 </div>
                 <h1>スポーツ科学</h1>
-                <button class="transition-button grayed-out-button">
+                <button class="transition-button" onclick="showSportsScienceMenu()">
                     出欠登録
                 </button>
             </div>
@@ -193,6 +193,16 @@
         </div>
     </div>
 
+    <div id="SportsScienceMenu" class="menu-overlay">
+        <div class="menu-content">
+            <h2>スポーツ科学</h2>
+            <div class="class-buttons-grid">
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">卓球</button>
+            </div>
+            <button class="close-menu-button" onclick="hideMathMenu()">閉じる</button>
+        </div>
+    </div>
+
     <div id="languageCultureMenu" class="menu-overlay">
         <div class="menu-content">
             <h2>言語と文化１</h2>
@@ -209,7 +219,7 @@
         <div class="menu-content">
             <h2>英語表現１</h2>
             <div class="class-buttons-grid">
-                <button class="transition-button grayed-out-button">ａクラス</button>
+                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5206')">ａクラス</button>
                 <button class="transition-button grayed-out-button">ｂクラス</button>
                 <button class="transition-button grayed-out-button">ｃクラス</button>
                 <button class="transition-button grayed-out-button">ｄクラス</button>
