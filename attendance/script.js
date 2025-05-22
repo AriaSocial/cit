@@ -57,6 +57,18 @@ function hideMathMenu() {
     menu.style.display = 'none'; // メニューを非表示
 }
 
+// スポーツ科学メニューを表示する関数を追加
+function showSportsScienceMenu() {
+    const menu = document.getElementById('sportsScienceMenu');
+    menu.style.display = 'flex'; // メニューを表示
+}
+
+// スポーツ科学メニューを非表示にする関数を追加
+function hideSportsScienceMenu() {
+    const menu = document.getElementById('sportsScienceMenu');
+    menu.style.display = 'none'; // メニューを非表示
+}
+
 // 言語と文化１メニューを表示する関数を追加
 function showLanguageCultureMenu() {
     const menu = document.getElementById('languageCultureMenu');
