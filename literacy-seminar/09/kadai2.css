@@ -1,0 +1,76 @@
+h1 { 
+    background: yellow;
+    padding:5px;
+}
+
+h3 {
+    padding: 3px 6px;
+    color:   #2277bb;
+    background: transparent;
+    border-left: solid 5px green;
+}
+
+p {
+    color: red;
+    width: 300px;
+    border: 1px solid black;
+}
+
+div {
+	color:red;
+	font-size:24px;
+}
+
+input[type="button"] {
+  display: inline-block;
+  border-radius: 40%;
+  font-size: 32pt;
+  text-align: center;
+  padding: 10px 30px;
+  line-height: 1em;
+  box-shadow: 3px 3px 3px #666666;
+  border: 2px solid #000066;
+  width: 180px;
+}
+
+#red_btn {
+  background: #ff0000;
+  color: #ffffff;
+}
+
+#green_btn {
+  backgroun: #00ff00;
+  color: #000000;
+}
+
+#blue_btn {
+  background: #0000ff;
+  color: #ffffff;
+}
+
+#red_btn:hover {
+  color        : #000000;
+  background : #ffff00;
+  border-radius         : 10%;
+  cursor  : pointer;
+  transition  : .3s;
+  box-shadow         : 3px 3px 3px red(255 0 0 / 100%);
+}
+
+#green_btn:hover {
+  color         : #000000;
+  background    : #ffff00;
+  border-radius    : 10%;
+  cursor    : pointer;
+  transition    : .3s;
+  box-shadow    : 3px 3px 3px green;
+}
+
+#blue_btn:hover {
+  color         : #000000;
+  background    : #ffff00;
+  border-radius    : 10%;
+  cursor    : pointer;
+  transition    : .3s;
+  box-shadow    : 3px 3px 3px #0000ff;
+}
