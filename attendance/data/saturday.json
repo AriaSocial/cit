@@ -1,0 +1,12 @@
+[
+  {
+    "time": "11:00 - 13:00",
+    "name": "教育行政学",
+    "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/611" }
+  },
+  {
+    "time": "14:00 - 16:00",
+    "name": "教育原理",
+    "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/611" }
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "time": "9:00 - 11:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceWednesday9Menu" }
+  },
+  {
+    "time": "10:00 - 12:00",
+    "name": "微分積分 高度",
+    "action": { "type": "menu", "value": "calculusWednesday10Menu" }
+  },
+  {
+    "time": "11:00 - 13:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceWednesday11Menu" }
+  },
+  {
+    "time": "13:00 - 15:00",
+    "name": "キャリアデザイン１ 高度",
+    "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331" }
+  },
+  {
+    "time": "15:00 - 17:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceWednesday15Menu" }
+  },
+  {
+    "time": "17:00 - 19:00",
+    "name": "補習授業",
+    "action": { "type": "menu", "value": "remedialWednesday17Menu" }
+  }
+]

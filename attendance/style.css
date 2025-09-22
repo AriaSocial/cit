@@ -1,3 +1,8 @@
+:root {
+    --main-theme-color: #4168E1;
+    --main-theme-color-hover: #3556b8;
+}
+
 body {
     display: flex;
     justify-content: center; /* コンテンツ全体を中央寄せ */
@@ -9,11 +14,16 @@ body {
     box-sizing: border-box; /* パディングとボーダーを幅に含める */
 }
 
+body.admin-mode-active {
+    --main-theme-color: #d93025; /* 赤色 */
+    --main-theme-color-hover: #b0251c; /* 少し濃い赤色 */
+}
+
 /* 全体を囲む外側の枠線付きコンテナ */
 .outer-container {
     width: 80vw; /* 画面幅の80% */
-    /* 外側枠線の色を#4168E1に変更 */
-    border: 2px solid #4168E1; /* 外側枠線のスタイル（色、太さ、種類） */
+    /* 外側枠線の色をCSS変数に変更 */
+    border: 2px solid var(--main-theme-color); /* 外側枠線のスタイル（色、太さ、種類） */
     border-radius: 15px; /* 外側枠線の角を丸くする */
     padding: 20px; /* 外側コンテナ内の余白 */
     background-color: #fff; /* 外側コンテナの背景色を白色に変更 */
@@ -37,7 +47,6 @@ body {
     font-size: 2em; /* 曜日のフォントサイズを調整 */
     color: #222; /* テキストカラーを黒っぽくしました */
     font-weight: bold; /* 曜日を太字にする */
-    cursor: grab; /* スワイプ可能な要素であることを示すカーソル */
     user-select: none; /* テキスト選択を防ぐ */
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10+ */
@@ -46,8 +55,10 @@ body {
 /* 講義室番号入力ボタンを囲むコンテナ */
 .classroom-button-container {
     width: 70vw; /* content-containerと同じ幅 */
-    text-align: left; /* ボタンを左寄せ */
     margin-bottom: 15px; /* ボタンと区切り線の間にスペース */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 
@@ -67,6 +78,13 @@ body {
     background-color: #d0d0d0; /* ホバー時の背景色を調整 */
     border-color: #b0b0b0; /* ホバー時の枠線色 */
     color: #333; /*テキストカラーは維持 */
+}
+
+/* 管理メニューボタンのスタイル */
+.admin-button {
+    background-color: var(--main-theme-color);
+    border-color: var(--main-theme-color-hover);
+    color: white;
 }
 
 
@@ -107,6 +125,14 @@ body {
      margin-bottom: 0;
 }
 
+/* 時間外の場合に表示されるメッセージ */
+.no-class-message {
+    color: #555;
+    font-size: 1.2em;
+    margin-top: 20px;
+    display: none; /* JavaScriptで表示を制御 */
+}
+
 
 /* 時間表示を含む左寄せ用のコンテナ */
 .left-aligned-container {
@@ -141,16 +167,16 @@ h1 {
     font-size: 16px; /* フォントサイズを調整 */
     cursor: pointer;
     border: none;
-    /* ボタンの背景色を#4168E1に変更 */
-    background-color: #4168E1;
+    /* ボタンの背景色をCSS変数に変更 */
+    background-color: var(--main-theme-color);
     /* ボタンのテキストカラー */
     color: #FFFFFF;
     transition: background-color 0.3s ease;
 }
 
 .transition-button:hover {
-    /* ホバー時の背景色を少し濃くする */
-    background-color: #3556b8; /* #4168E1より少し濃い色 */
+    /* ホバー時の背景色をCSS変数に変更 */
+    background-color: var(--main-theme-color-hover);
     /* ホバー時のテキストカラーは白を維持 */
     color: #FFFFFF;
 }
@@ -167,6 +193,95 @@ h1 {
     justify-content: center; /* メニューを中央寄せ */
     align-items: center;
     z-index: 1000; /* 他の要素より手前に表示 */
+}
+
+/* 管理メニュー内のコントロールをまとめるコンテナ */
+.admin-menu-controls {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* トグルスイッチのコンテナ */
+.toggle-switch-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px; /* 左右に少しパディング */
+    box-sizing: border-box;
+}
+
+.toggle-switch-container span {
+    font-size: 1em;
+    color: #333;
+}
+
+/* トグルスイッチ本体 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* チェックボックスを隠す */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* スライダーのスタイル */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--main-theme-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--main-theme-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* 丸いスライダー */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* 管理メニューの無効化されたオプションのラッパー */
+#adminOptionsWrapper {
+    width: 100%;
+    transition: opacity 0.3s ease;
 }
 
 /* メニューコンテンツのスタイル */
@@ -210,8 +325,8 @@ h1 {
     cursor: pointer;
     /* ボタンの角を10px丸くしました */
     border-radius: 8px; /* 角の丸みを小さく調整 */
-    /* デフォルトの青色背景 */
-    background-color: #4168E1;
+    /* CSS変数を使用 */
+    background-color: var(--main-theme-color);
     border: none;
     color: white; /* テキストカラーを白に */
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -219,7 +334,7 @@ h1 {
 }
 
 .menu-content button:not(.close-menu-button):not(.reset-button):hover {
-     background-color: #3556b8; /* ホバー時の背景色 */
+     background-color: var(--main-theme-color-hover); /* ホバー時の背景色 */
      color: white; /* ホバー時のテキストカラー */
 }
 
@@ -299,7 +414,7 @@ h1 {
     font-size: 0.9em; /* フォントサイズを小さく調整 */
     cursor: pointer;
     border-radius: 8px; /* 角の丸みを小さく調整 */
-    background-color: #4168E1;
+    background-color: var(--main-theme-color);
     border: none;
     color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -307,7 +422,7 @@ h1 {
 }
 
  .classroom-submit-button:hover {
-     background-color: #3556b8; /* ホバー時の背景色 */
+     background-color: var(--main-theme-color-hover); /* ホバー時の背景色 */
      color: white; /* ホバー時のテキストカラー */
 }
 
@@ -327,7 +442,7 @@ h1 {
     font-size: 0.9em; /* フォントサイズを小さく調整 */
     cursor: pointer;
     border-radius: 8px; /* 角の丸みを小さく調整 */
-    background-color: #4168E1; /* 青色背景 */
+    background-color: var(--main-theme-color); /* 青色背景 */
     border: none;
     color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -336,6 +451,13 @@ h1 {
 }
 
 .day-selection-grid button:hover {
-    background-color: #3556b8; /* ホバー時の背景色 */
+    background-color: var(--main-theme-color-hover); /* ホバー時の背景色 */
     color: white;
+}
+
+/* 管理メニューの無効化されたオプション */
+#adminOptionsWrapper.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }

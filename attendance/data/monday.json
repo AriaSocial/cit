@@ -1,0 +1,42 @@
+[
+  {
+    "time": "9:00 - 11:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceMonday9Menu" }
+  },
+  {
+    "time": "9:00 - 11:00",
+    "name": "言語と文化2",
+    "action": { "type": "menu", "value": "languageCultureMonday9Menu" }
+  },
+  {
+    "time": "11:00 - 13:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceMonday11Menu" }
+  },
+  {
+    "time": "11:00 - 13:00",
+    "name": "線形代数応用 高度",
+    "action": { "type": "menu", "value": "linearAlgebraAppliedMonday11Menu" }
+  },
+  {
+    "time": "14:00 - 16:00",
+    "name": "英語理解２",
+    "action": { "type": "menu", "value": "englishUnderstanding2Menu" }
+  },
+  {
+    "time": "15:00 - 17:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceMonday15Menu" }
+  },
+  {
+    "time": "16:00 - 18:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceMonday16Menu" }
+  },
+  {
+    "time": "16:00 - 18:00",
+    "name": "補習授業",
+    "action": { "type": "menu", "value": "remedialMonday16Menu" }
+  }
+]

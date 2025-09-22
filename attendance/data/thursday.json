@@ -1,0 +1,47 @@
+[
+  {
+    "time": "9:00 - 11:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceThursday9Menu" }
+  },
+  {
+    "time": "10:00 - 12:00",
+    "name": "異文化理解 知能・認知・高度",
+    "action": { "type": "menu", "value": "crossCulturalUnderstandingThursday10Menu" }
+  },
+  {
+    "time": "11:00 - 13:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceThursday11Menu" }
+  },
+  {
+    "time": "13:00 - 15:00",
+    "name": "英語表現２",
+    "action": { "type": "menu", "value": "englishExpression2Menu" }
+  },
+  {
+    "time": "13:00 - 15:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceThursday13Menu" }
+  },
+  {
+    "time": "15:00 - 17:00",
+    "name": "学部指定科目群１",
+    "action": { "type": "menu", "value": "facultySubjectsMenu" }
+  },
+  {
+    "time": "15:00 - 17:00",
+    "name": "補習授業",
+    "action": { "type": "menu", "value": "remedialThursday15Menu" }
+  },
+  {
+    "time": "17:00 - 19:00",
+    "name": "数理・データサイエンス・AI入門",
+    "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103" }
+  },
+  {
+    "time": "17:00 - 19:00",
+    "name": "補習授業",
+    "action": { "type": "menu", "value": "remedialThursday17Menu" }
+  }
+]

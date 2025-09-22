@@ -21,138 +21,43 @@ function displayCurrentDay() {
     dayElement.textContent = `${days[dayOfWeek]}曜日`;
 }
 
-// 線形代数基礎メニューを表示する関数
-function showLinearAlgebraMenu() {
-    const menu = document.getElementById('linearAlgebraMenu');
-    menu.style.display = 'flex'; // メニューを表示
+let displayedDayIndex; // 表示されている曜日を追跡するための変数 (0=日, 1=月, ...)
+let showAllClasses = false; // 講義を全て表示するかのフラグ
+
+// 汎用的なメニュー表示関数
+function showMenu(menuId) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+        menu.style.display = 'flex';
+    }
 }
 
-// 線形代数基礎メニューを非表示にする関数
-function hideLinearAlgebraMenu() {
-    const menu = document.getElementById('linearAlgebraMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 英語理解１メニューを表示する関数を追加
-function showEnglishMenu() {
-    const menu = document.getElementById('englishMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 英語理解１メニューを非表示にする関数を追加
-function hideEnglishMenu() {
-    const menu = document.getElementById('englishMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 数学基礎 高度メニューを表示する関数を追加
-function showMathMenu() {
-    const menu = document.getElementById('mathMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 数学基礎 高度メニューを非表示にする関数を追加
-function hideMathMenu() {
-    const menu = document.getElementById('mathMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// スポーツ科学メニューを表示する関数を追加
-function showSportsScienceMenu() {
-    const menu = document.getElementById('sportsScienceMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// スポーツ科学メニューを非表示にする関数を追加
-function hideSportsScienceMenu() {
-    const menu = document.getElementById('sportsScienceMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 言語と文化１メニューを表示する関数を追加
-function showLanguageCultureMenu() {
-    const menu = document.getElementById('languageCultureMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 言語と文化１メニューを非表示にする関数を追加
-function hideLanguageCultureMenu() {
-    const menu = document.getElementById('languageCultureMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 英語表現１メニューを表示する関数を追加
-function showEnglishExpressionMenu() {
-    const menu = document.getElementById('englishExpressionMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 英語表現１メニューを非表示にする関数を追加
-function hideEnglishExpressionMenu() {
-    const menu = document.getElementById('englishExpressionMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 日本語表現法 高度メニューを表示する関数を追加
-function showJapaneseExpressionMenu() {
-    const menu = document.getElementById('japaneseExpressionMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 日本語表現法 高度メニューを非表示にする関数を追加
-function hideJapaneseExpressionMenu() {
-    const menu = document.getElementById('japaneseExpressionMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 学部指定科目群 1メニューを表示する関数を追加
-function showFacultySubjectsMenu() {
-    const menu = document.getElementById('facultySubjectsMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 学部指定科目群 1メニューを非表示にする関数を追加
-function hideFacultySubjectsMenu() {
-    const menu = document.getElementById('facultySubjectsMenu');
-    menu.style.display = 'none'; // メニューを非表示
-}
-
-// 講義室番号入力メニューを表示する関数を追加
-function showClassroomNumberMenu() {
-    const menu = document.getElementById('classroomNumberMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 講義室番号入力メニューを非表示にする関数を追加
-function hideClassroomNumberMenu() {
-    const menu = document.getElementById('classroomNumberMenu');
-    menu.style.display = 'none'; // メニューを非表示
-     // 入力フィールドをクリア
-    document.getElementById('classroomNumberInput').value = '';
+// 汎用的なメニュー非表示関数
+function hideMenu(menuId) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+        menu.style.display = 'none';
+        // 講義室番号入力メニューの場合、入力フィールドをクリアする
+        if (menuId === 'classroomNumberMenu') {
+            document.getElementById('classroomNumberInput').value = '';
+        }
+    }
 }
 
 // 講義室番号を送信する関数
 function submitClassroomNumber() {
     const classroomNumber = document.getElementById('classroomNumberInput').value;
-    if (classroomNumber) {
+    // 'admin' をBase64エンコードした文字列 'YWRtaW4=' と比較
+    if (classroomNumber === atob('YWRtaW4=')) {
+        hideMenu('classroomNumberMenu'); // 講義室指定メニューを閉じる
+        showMenu('adminMenu'); // 管理メニューを開く
+    } else if (classroomNumber) {
         const url = `https://attendance.is.it-chiba.ac.jp/attendance/class_room/${classroomNumber}`;
         openNewWindow(url); // 指定されたURLを開く
-        hideClassroomNumberMenu(); // メニューを閉じる
+        hideMenu('classroomNumberMenu'); // メニューを閉じる
     } else {
         alert('講義室番号を入力してください。'); // 番号が入力されていない場合
     }
-}
-
-// 開発メニューを表示する関数
-function showDevelopmentMenu() {
-    const menu = document.getElementById('developmentMenu');
-    menu.style.display = 'flex'; // メニューを表示
-}
-
-// 開発メニューを非表示にする関数
-function hideDevelopmentMenu() {
-    const menu = document.getElementById('developmentMenu');
-    menu.style.display = 'none'; // メニューを非表示
 }
 
 // 表示する曜日を設定し、セクション表示を更新する関数
@@ -160,8 +65,9 @@ function hideDevelopmentMenu() {
 function setDisplayedDay(event, day) {
     event.stopPropagation(); // イベント伝播を停止
     showWeekdaySections(day); // セクション表示を更新
+    updateClassVisibility(); // 表示を即時更新
     // メニューを閉じる処理に遅延を追加
-    setTimeout(hideDevelopmentMenu, 100); // 遅延を100ミリ秒に調整
+    setTimeout(() => hideMenu('adminMenu'), 100); // 遅延を100ミリ秒に調整
 }
 
 // 表示を今日の曜日に戻す関数
@@ -169,17 +75,47 @@ function setDisplayedDay(event, day) {
 function resetDisplayedDay(event) {
     event.stopPropagation(); // イベント伝播を停止
     showWeekdaySections(); // セクション表示を今日の曜日に戻す
+    updateClassVisibility(); // 表示を即時更新
     // メニューを閉じる処理に遅延を追加
-    setTimeout(hideDevelopmentMenu, 100); // 遅延を100ミリ秒に調整
+    setTimeout(() => hideMenu('adminMenu'), 100); // 遅延を100ミリ秒に調整
 }
 
+// 管理メニューの「管理モード」トグルを処理する関数
+function toggleAdminMode(isChecked) {
+    const body = document.body;
+    const adminMenuButton = document.getElementById('adminMenuButton');
+    const adminOptionsWrapper = document.getElementById('adminOptionsWrapper');
+
+    if (isChecked) {
+        body.classList.add('admin-mode-active');
+        if (adminMenuButton) adminMenuButton.style.display = 'inline-block';
+        if (adminOptionsWrapper) adminOptionsWrapper.classList.remove('disabled');
+    } else {
+        body.classList.remove('admin-mode-active');
+        if (adminMenuButton) adminMenuButton.style.display = 'none';
+        if (adminOptionsWrapper) adminOptionsWrapper.classList.add('disabled');
+
+        // 管理モードがOFFになったら、講義全表示もOFFにする
+        const showAllToggle = document.getElementById('showAllClassesToggle');
+        if (showAllToggle && showAllToggle.checked) {
+            showAllToggle.checked = false;
+            toggleShowAllClasses(false); // 状態をリセット
+        }
+    }
+}
+
+// 管理メニューの「講義全表示」トグルを処理する関数
+function toggleShowAllClasses(isChecked) {
+    showAllClasses = isChecked;
+    updateClassVisibility(); // 表示を即時更新
+}
 
 // 曜日ごとのセクションを表示する関数
 // dayToShowが指定された場合はその曜日のセクションを表示、それ以外は現在の曜日のセクションを表示
 function showWeekdaySections(dayToShow) {
     const today = new Date();
     // dayToShowが指定されていればその曜日を使用、そうでなければ現在の曜日を使用
-    const dayOfWeek = (dayToShow !== undefined) ? dayToShow : today.getDay();
+    displayedDayIndex = (dayToShow !== undefined) ? dayToShow : today.getDay();
 
     // 全ての曜日セクションと週末メッセージを非表示にする
     document.querySelectorAll('.weekday-sections').forEach(section => {
@@ -187,7 +123,7 @@ function showWeekdaySections(dayToShow) {
     });
 
     // 指定された曜日または現在の曜日に対応するセクションを表示する
-    switch (dayOfWeek) {
+    switch (displayedDayIndex) {
         case 1: // 月曜日
             document.getElementById('mondaySections').style.display = 'flex';
             break;
@@ -207,94 +143,175 @@ function showWeekdaySections(dayToShow) {
             document.getElementById('saturdaySections').style.display = 'flex'; // 土曜日セクションを表示
             break;
         default: // 日曜日 (dayOfWeek === 0)
-            document.getElementById('weekendMessage').style.display = 'block'; // 週末メッセージを表示
+            document.getElementById('sundaySections').style.display = 'block'; // 日曜日メッセージを表示
             break;
     }
 }
 
-// スワイプ検出のための変数 (タッチ用)
-let touchstartX = 0;
-let touchendX = 0;
-const swipeThreshold = 50; // スワイプと判定するための最小距離 (px)
+// 個々のコースのHTML要素を生成する関数
+function createCourseElement(course) {
+    const container = document.createElement('div');
+    container.className = 'content-container';
 
-// スワイプ検出のための変数 (マウス用)
-let mousestartX = 0;
-let mouseIsDown = false; // マウスが押されているかどうかのフラグ
+    // course.time (e.g., "09:00 - 11:00") から開始時刻をパースしてdata属性に保存
+    const startTimeStr = course.time.split(' - ')[0];
+    container.dataset.startTime = startTimeStr;
 
-// 曜日表示要素を取得
-const currentDayElement = document.getElementById('current-day');
+    const timeContainer = document.createElement('div');
+    timeContainer.className = 'left-aligned-container';
+    const timeP = document.createElement('p');
+    timeP.className = 'course-time';
+    timeP.textContent = course.time;
+    timeContainer.appendChild(timeP);
 
-// --- タッチイベントリスナー ---
-currentDayElement.addEventListener('touchstart', function(event) {
-    touchstartX = event.changedTouches[0].screenX;
-}, false);
+    const title = document.createElement('h1');
+    title.textContent = course.name;
 
-currentDayElement.addEventListener('touchend', function(event) {
-    touchendX = event.changedTouches[0].screenX;
-    handleTouchGesture();
-}, false);
+    const button = document.createElement('button');
+    button.className = 'transition-button';
+    button.textContent = '出欠登録';
 
-// --- マウスイベントリスナー ---
-currentDayElement.addEventListener('mousedown', function(event) {
-    mousestartX = event.screenX;
-    mouseIsDown = true; // マウスが押された
-}, false);
-
-// mousemoveはdrag中にのみ検出したいが、ここではmouseupで判定するため不要
-// currentDayElement.addEventListener('mousemove', function(event) {
-//     if (!mouseIsDown) return;
-//     // ドラッグ中の処理が必要な場合はここに追加
-// }, false);
-
-currentDayElement.addEventListener('mouseup', function(event) {
-    if (!mouseIsDown) return; // マウスが押されていなければ何もしない
-    const mouseendX = event.screenX;
-    mouseIsDown = false; // マウスが離された
-    handleMouseGesture(mousestartX, mouseendX);
-}, false);
-
-// マウスが要素の外で離された場合も考慮 (任意)
-// document.addEventListener('mouseup', function(event) {
-//     if (mouseIsDown) {
-//         const mouseendX = event.screenX;
-//         mouseIsDown = false;
-//         handleMouseGesture(mousestartX, mouseendX);
-//     }
-// }, false);
-
-
-// タッチスワイプジェスチャーを処理する関数
-function handleTouchGesture() {
-    // 右方向へのスワイプ（開始座標より終了座標が大きい）で、かつ一定距離以上の移動がある場合
-    if (touchendX > touchstartX && touchendX - touchstartX > swipeThreshold) {
-        console.log('Right touch swipe detected!'); // 開発者向けコンソールに表示
-        showDevelopmentMenu(); // 開発メニューを表示
+    if (course.action.type === 'directLink') {
+        button.onclick = () => openNewWindow(course.action.value);
+    } else if (course.action.type === 'menu') {
+        button.onclick = () => showMenu(course.action.value);
     }
-    // 左方向へのスワイプ（必要に応じて追加）
-    // else if (touchendX < touchstartX && touchstartX - touchendX > swipeThreshold) {
-    //     console.log('Left touch swipe detected!');
-    // }
+
+    container.appendChild(timeContainer);
+    container.appendChild(title);
+    container.appendChild(button);
+
+    return container;
 }
 
-// マウススワイプジェスチャーを処理する関数
-function handleMouseGesture(startX, endX) {
-     // 右方向へのスワイプ（開始座標より終了座標が大きい）で、かつ一定距離以上の移動がある場合
-    if (endX > startX && endX - startX > swipeThreshold) {
-        console.log('Right mouse swipe detected!'); // 開発者向けコンソールに表示
-        showDevelopmentMenu(); // 開発メニューを表示
-    }
-    // 左方向へのスワイプ（必要に応じて追加）
-    // else if (endX < startX && startX - endX > swipeThreshold) {
-    //     console.log('Left mouse swipe detected!');
-    // }
+// ページ読み込み時にコース情報を読み込んで表示する
+async function loadAllCourses() {
+    const days = {
+        'monday': 'mondaySections',
+        'tuesday': 'tuesdaySections',
+        'wednesday': 'wednesdaySections',
+        'thursday': 'thursdaySections',
+        'friday': 'fridaySections',
+        'saturday': 'saturdaySections'
+    };
+
+    // 各曜日のJSONを並行して読み込む
+    const promises = Object.entries(days).map(async ([day, sectionId]) => {
+        try {
+            const response = await fetch(`data/${day}.json`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const courses = await response.json();
+            const sectionElement = document.getElementById(sectionId);
+            
+            if (sectionElement) {
+                sectionElement.innerHTML = ''; // 既存の内容をクリア
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+                        const courseElement = createCourseElement(course);
+                        sectionElement.appendChild(courseElement);
+                    });
+                    // 講義はあるが、時間外の場合に表示するメッセージを追加
+                    const noClassMessage = document.createElement('p');
+                    noClassMessage.className = 'no-class-message';
+                    noClassMessage.textContent = '現在表示可能な講義はありません';
+                    noClassMessage.style.display = 'none'; // 初期状態では非表示
+                    sectionElement.appendChild(noClassMessage);
+                } else {
+                    // そもそも講義が一つもない場合
+                    sectionElement.innerHTML = '<p>該当講義なし</p>';
+                }
+            }
+        } catch (error) {
+            console.error(`Could not load courses for ${day}:`, error);
+            const sectionElement = document.getElementById(sectionId);
+            if(sectionElement) {
+                sectionElement.innerHTML = '<p>講義情報の読み込みに失敗しました。</p>';
+            }
+        }
+    });
+
+    await Promise.all(promises);
 }
 
+// 時間に基づいて講義の表示・非表示を切り替える関数
+function updateClassVisibility() {
+    const now = new Date();
+    const todayIndex = now.getDay();
 
-// ページ読み込み時に曜日を表示し、曜日ごとのセクションを切り替える
-window.onload = function() {
-    displayCurrentDay(); // 曜日を表示 (常に今日の曜日)
-    showWeekdaySections(); // 曜日ごとのセクションを切り替える (デフォルトは今日の曜日)
+    // 表示中の曜日が今日でない、または「講義全表示」がONの場合、その曜日の講義をすべて表示する
+    if (displayedDayIndex !== todayIndex || showAllClasses) {
+        const visibleSection = document.querySelector('.weekday-sections[style*="display: flex"], .weekday-sections[style*="display: block"]');
+        if (visibleSection) {
+            const courses = visibleSection.querySelectorAll('.content-container');
+            courses.forEach(course => {
+                course.style.display = 'flex';
+            });
+            const noClassMessage = visibleSection.querySelector('.no-class-message');
+            if (noClassMessage) {
+                noClassMessage.style.display = 'none';
+            }
+        }
+        return;
+    }
 
+    // 表示中の曜日が今日の場合、時間に基づいて表示を切り替える
+    const daysMap = ['sundaySections', 'mondaySections', 'tuesdaySections', 'wednesdaySections', 'thursdaySections', 'fridaySections', 'saturdaySections'];
+    const sectionId = daysMap[todayIndex];
+    const sectionElement = document.getElementById(sectionId);
+
+    if (!sectionElement) return;
+
+    const courses = sectionElement.querySelectorAll('.content-container');
+    let visibleCoursesCount = 0;
+
+    courses.forEach(course => {
+        const startTimeStr = course.dataset.startTime;
+        if (!startTimeStr) {
+            course.style.display = 'flex'; // data-start-timeがない場合は常に表示
+            return;
+        }
+
+        const [startHour, startMinute] = startTimeStr.split(':').map(Number);
+
+        const classStartTime = new Date(now);
+        classStartTime.setHours(startHour, startMinute, 0, 0);
+
+        // 表示開始時刻（講義開始30分前）
+        const displayStartTime = new Date(classStartTime);
+        displayStartTime.setMinutes(classStartTime.getMinutes() - 30);
+
+        // 表示終了時刻（講義開始1時間後）
+        const displayEndTime = new Date(classStartTime);
+        displayEndTime.setHours(classStartTime.getHours() + 1);
+
+        if (now >= displayStartTime && now <= displayEndTime) {
+            course.style.display = 'flex';
+            visibleCoursesCount++;
+        } else {
+            course.style.display = 'none';
+        }
+    });
+
+    // 表示可能な講義が一つもない場合にメッセージを表示
+    const noClassMessage = sectionElement.querySelector('.no-class-message');
+    if (noClassMessage) {
+        noClassMessage.style.display = (visibleCoursesCount === 0 && courses.length > 0) ? 'block' : 'none';
+    }
+}
+
+// ページ読み込み時に実行
+window.onload = async function() {
+    await loadAllCourses(); // JSONからコース情報を読み込んで表示
+    displayCurrentDay(); // 曜日を表示
+    showWeekdaySections(); // 曜日ごとのセクションを切り替え、displayedDayIndexを初期化
+    
+    // 初期状態で管理メニューのオプションを無効化
+    document.getElementById('adminOptionsWrapper').classList.add('disabled');
+
+    updateClassVisibility(); // ページ読み込み時に一度実行
+    setInterval(updateClassVisibility, 30000); // 30秒ごとに表示を更新
 
     // 各メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナー
     const menuOverlays = document.querySelectorAll('.menu-overlay');
@@ -302,16 +319,7 @@ window.onload = function() {
         overlay.addEventListener('click', function(event) {
             // メニューコンテンツ自体をクリックした場合は閉じない
             if (event.target === overlay) {
-                // クリックされたオーバーレイのIDに応じて適切な非表示関数を呼び出す
-                if (overlay.id === 'linearAlgebraMenu') hideLinearAlgebraMenu();
-                else if (overlay.id === 'englishMenu') hideEnglishMenu();
-                else if (overlay.id === 'mathMenu') hideMathMenu();
-                else if (overlay.id === 'languageCultureMenu') hideLanguageCultureMenu();
-                else if (overlay.id === 'englishExpressionMenu') hideEnglishExpressionMenu();
-                else if (overlay.id === 'japaneseExpressionMenu') hideJapaneseExpressionMenu();
-                else if (overlay.id === 'facultySubjectsMenu') hideFacultySubjectsMenu();
-                else if (overlay.id === 'classroomNumberMenu') hideClassroomNumberMenu();
-                else if (overlay.id === 'developmentMenu') hideDevelopmentMenu(); // 開発メニューの非表示も追加
+                hideMenu(overlay.id);
             }
         });
     });

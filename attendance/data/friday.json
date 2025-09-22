@@ -1,0 +1,27 @@
+[
+  {
+    "time": "9:00 - 11:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceFriday9Menu" }
+  },
+  {
+    "time": "11:00 - 13:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceFriday11Menu" }
+  },
+  {
+    "time": "13:00 - 15:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceFriday13Menu" }
+  },
+  {
+    "time": "15:00 - 17:00",
+    "name": "スポーツ科学",
+    "action": { "type": "menu", "value": "sportsScienceFriday15Menu" }
+  },
+  {
+    "time": "17:00 - 19:00",
+    "name": "補習授業",
+    "action": { "type": "menu", "value": "remedialFriday17Menu" }
+  }
+]
