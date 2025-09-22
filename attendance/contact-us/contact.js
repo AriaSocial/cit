@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // 【重要】このURLは、ご自身のCloudflare WorkerのURLに置き換えてください
-            const workerUrl = 'https://your-worker-name.your-subdomain.workers.dev';
+            // Cloudflare Pages Functionsのエンドポイントを相対パスで指定
+            const workerUrl = '/submit-contact';
 
             const response = await fetch(workerUrl, {
                 method: 'POST',
