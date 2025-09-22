@@ -61,20 +61,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // 【重要】このURLは、後述の手順で取得するご自身のGoogle Apps Script Web AppのURLに置き換えてください
-            const workerUrl = 'https://script.google.com/macros/s/AKfycbzTZKeBMquelhpDoiLAzQghXForGgdCVOmsG5DTLlBPpc5DHlymvyNa80MPJT1CoViu/exec';
+            // 【重要】このURLは、ご自身のCloudflare WorkerのURLに置き換えてください
+            const workerUrl = 'https://your-worker-name.your-subdomain.workers.dev';
 
             const response = await fetch(workerUrl, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(data),
             });
 
-            // GASは通常200 OKを返すため、レスポンスボディの中身で成功/失敗を判断します
-            const result = await response.json();
-
-            if (!response.ok || !result.success) {
-                throw new Error(result.error || `サーバーエラー: ${response.statusText}`);
+            if (!response.ok) {
+                throw new Error(`サーバーエラー: ${response.statusText}`);
             }
+
+            // Workerからの応答を待つ必要がなければ、以下の行は不要です
+            // const result = await response.json();
 
             statusMessage.textContent = 'お問い合わせありがとうございます。メッセージは正常に送信されました。';
             statusMessage.classList.add('status-success');
