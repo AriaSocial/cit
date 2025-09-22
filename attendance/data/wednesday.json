@@ -1,18 +1,43 @@
 [
   {
-    "time": "9:00 - 11:00",
+    "time": "09:00 - 11:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceWednesday9Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceWednesday9Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "ブラサカ・ボッチャ", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7203" },
+        { "name": "テニス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" }
+      ]
+    }
   },
   {
     "time": "10:00 - 12:00",
     "name": "微分積分 高度",
-    "action": { "type": "menu", "value": "calculusWednesday10Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "calculusWednesday10Menu",
+      "title": "微分積分 高度",
+      "options": [
+        { "name": "aクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204" },
+        { "name": "b・cクラス", "disabled": true }
+      ]
+    }
   },
   {
     "time": "11:00 - 13:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceWednesday11Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceWednesday11Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "ゴルフ", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
+        { "name": "ブラサカ・ボッチャ", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7203" },
+        { "name": "テニス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" }
+      ]
+    }
   },
   {
     "time": "13:00 - 15:00",
@@ -22,11 +47,25 @@
   {
     "time": "15:00 - 17:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceWednesday15Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceWednesday15Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "ヨガ", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" }
+      ]
+    }
   },
   {
     "time": "17:00 - 19:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialWednesday17Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialWednesday17Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "線形代数基礎", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5108" }
+      ]
+    }
   }
 ]

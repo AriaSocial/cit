@@ -1,27 +1,69 @@
 [
   {
-    "time": "9:00 - 11:00",
+    "time": "09:00 - 11:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceFriday9Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceFriday9Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "卓球", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
+        { "name": "ソフトボール", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5302" },
+        { "name": "サッカー", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5207" },
+        { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" }
+      ]
+    }
   },
   {
     "time": "11:00 - 13:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceFriday11Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceFriday11Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "レクリエーション", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
+        { "name": "サッカー", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5207" },
+        { "name": "ウォーキング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
     "time": "13:00 - 15:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceFriday13Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceFriday13Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "バスケットボール", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304" }
+      ]
+    }
   },
   {
     "time": "15:00 - 17:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceFriday15Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceFriday15Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "卓球", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" },
+        { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304" }
+      ]
+    }
   },
   {
     "time": "17:00 - 19:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialFriday17Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialFriday17Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "数理・データサイエンス・AI入門", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103" },
+        { "name": "数学基礎", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8107" }
+      ]
+    }
   }
 ]

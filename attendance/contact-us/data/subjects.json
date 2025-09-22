@@ -1,0 +1,14 @@
+[
+  {
+    "value": "unregistered_course",
+    "text": "未登録の講義名または講義室番号の情報提供"
+  },
+  {
+    "value": "incorrect_link",
+    "text": "出欠登録ページへの誤ったリンク"
+  },
+  {
+    "value": "other",
+    "text": "その他"
+  }
+]

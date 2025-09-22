@@ -1,0 +1,112 @@
+/* お問い合わせページのメインコンテナ */
+.contact-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border: 2px solid #4168E1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.contact-container h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.contact-container p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+#contact-form input,
+#contact-form textarea,
+#contact-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+#contact-form textarea {
+    resize: vertical; /* 高さを自由に変更可能に */
+    min-height: 120px; /* 最小の高さを設定 */
+}
+
+#contact-form select {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+/* プルダウンのプレースホルダーの色を設定 */
+select:required:invalid {
+    color: #6c757d; /* 薄いグレー */
+}
+
+option {
+    color: #000; /* 通常の選択肢の色 */
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus,
+#contact-form select:focus {
+    outline: none;
+    border-color: #4168E1;
+}
+
+#custom-subject-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-form .submit-button {
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #4168E1;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+#contact-form .submit-button:hover {
+    background-color: #3556b8;
+}
+
+#form-status {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.status-success {
+    color: #28a745;
+}
+
+.status-error {
+    color: #dc3545;
+}

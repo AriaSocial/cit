@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChibaTech 出欠登録</title>
+    <!-- 親ディレクトリのスタイルを再利用 -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- このページ専用のスタイル -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1 class="site-title">ChibaTech 出欠登録</h1>
+        <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+    <nav class="main-nav" id="main-nav">
+        <ul>
+            <li><a href="../">ホーム</a></li>
+            <li><a href="./">お問い合わせ</a></li>
+            <li class="nav-separator"><hr></li>
+            <li><a href="https://portal.it-chiba.ac.jp/" target="_blank" rel="noopener noreferrer">CIT ポータル</a></li>
+            <li><a href="https://cit.manaba.jp/" target="_blank" rel="noopener noreferrer">manaba</a></li>
+        </ul>
+    </nav>
+    <div class="header-lines">
+        <div class="line-thin"></div>
+        <div class="line-thick"></div>
+    </div>
+
+    <div class="contact-container">
+        <h2>お問い合わせ</h2>
+        <!--
+            【開発者向け注記】
+            このフォームを機能させるには、`action`のURLをFormspreeなどのフォームバックエンドサービスで取得した独自のエンドポイントURLに置き換える必要があります。
+            例: action="https://formspree.io/f/your_unique_form_id"
+        -->
+        <form id="contact-form">
+            <label for="contact-category">お問い合わせ内容</label>
+            <select id="contact-category" name="category" required>
+                <option value="" disabled selected>お問い合わせ内容を選択</option>
+            </select>
+
+            <div id="custom-subject-container" style="display: none;">
+                <label for="custom-subject">件名</label>
+                <input type="text" id="custom-subject" name="subject">
+            </div>
+
+            <label for="message">本文</label>
+            <textarea id="message" name="message" rows="8" required></textarea>
+
+            <button type="submit" class="submit-button">送信</button>
+            <p id="form-status"></p>
+        </form>
+    </div>
+
+    <script src="../script.js"></script>
+    <script src="contact.js"></script>
+</body>
+</html>

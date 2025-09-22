@@ -1,42 +1,108 @@
 [
   {
-    "time": "9:00 - 11:00",
+    "time": "09:00 - 11:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceMonday9Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceMonday9Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "バスケットボール", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" },
+        { "name": "トレーニング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
-    "time": "9:00 - 11:00",
+    "time": "09:00 - 11:00",
     "name": "言語と文化2",
-    "action": { "type": "menu", "value": "languageCultureMonday9Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "languageCultureMonday9Menu",
+      "title": "言語と文化2",
+      "options": [
+        { "name": "ドイツ語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307" },
+        { "name": "フランス語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
+        { "name": "中国語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5209" }
+      ]
+    }
   },
   {
     "time": "11:00 - 13:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceMonday11Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceMonday11Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "トレーニング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
     "time": "11:00 - 13:00",
     "name": "線形代数応用 高度",
-    "action": { "type": "menu", "value": "linearAlgebraAppliedMonday11Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "linearAlgebraAppliedMonday11Menu",
+      "title": "線形代数応用 高度",
+      "options": [
+        { "name": "奇数", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8208" },
+        { "name": "偶数", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207" }
+      ]
+    }
   },
   {
     "time": "14:00 - 16:00",
     "name": "英語理解２",
-    "action": { "type": "menu", "value": "englishUnderstanding2Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "englishUnderstanding2Menu",
+      "title": "英語理解２",
+      "options": [
+        { "name": "ａクラス", "disabled": true },
+        { "name": "ｂクラス", "disabled": true },
+        { "name": "ｃクラス", "disabled": true },
+        { "name": "ｄクラス", "disabled": true },
+        { "name": "ｅクラス", "disabled": true },
+        { "name": "ｆクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5305" }
+      ]
+    }
   },
   {
     "time": "15:00 - 17:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceMonday15Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceMonday15Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "トレーニング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
     "time": "16:00 - 18:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceMonday16Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceMonday16Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102" },
+        { "name": "卓球", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" }
+      ]
+    }
   },
   {
     "time": "16:00 - 18:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialMonday16Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialMonday16Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "確率統計", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8107" }
+      ]
+    }
   }
 ]

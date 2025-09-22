@@ -1,6 +1,6 @@
 [
   {
-    "time": "9:00 - 13:00",
+    "time": "09:00 - 13:00",
     "name": "情報リテラシ演習２ 高度",
     "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331" }
   },
@@ -12,11 +12,27 @@
   {
     "time": "15:00 - 17:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialTuesday15Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialTuesday15Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "線形代数基礎", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202" }
+      ]
+    }
   },
   {
     "time": "17:00 - 19:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialTuesday17Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialTuesday17Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "数理・データサイエンス・AI入門", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103" },
+        { "name": "言語と文化１ ドイツ語", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5204" },
+        { "name": "微分積分", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202" }
+      ]
+    }
   }
 ]

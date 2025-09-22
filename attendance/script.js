@@ -10,19 +10,22 @@ function openNewWindow(urlToOpen) {
     }
 }
 
-// 現在の曜日を取得して表示する関数
-// この関数は常に今日の曜日を表示します
-function displayCurrentDay() {
-    const days = ['日', '月', '火', '水', '木', '金', '土'];
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 今日の曜日を取得
-    const dayElement = document.getElementById('current-day');
-    // 表示テキストを「X曜日」の形式に変更
-    dayElement.textContent = `${days[dayOfWeek]}曜日`;
-}
-
 let displayedDayIndex; // 表示されている曜日を追跡するための変数 (0=日, 1=月, ...)
 let showAllClasses = false; // 講義を全て表示するかのフラグ
+let isForcedDisplay = false; // 曜日が強制的に表示されているかのフラグ
+
+function updateDayDisplay() {
+    const days = ['日', '月', '火', '水', '木', '金', '土'];
+    const dayElement = document.getElementById('current-day');
+    // displayedDayIndexは表示中の曜日を保持
+    const dayName = days[displayedDayIndex]; 
+
+    if (isForcedDisplay) {
+        dayElement.textContent = `${dayName}曜日（強制表示中）`;
+    } else {
+        dayElement.textContent = `${dayName}曜日`;
+    }
+}
 
 // 汎用的なメニュー表示関数
 function showMenu(menuId) {
@@ -42,6 +45,36 @@ function hideMenu(menuId) {
             document.getElementById('classroomNumberInput').value = '';
         }
     }
+}
+
+// Constants for localStorage
+const DONT_SHOW_TODAY_KEY = 'chibatech_dont_show_today';
+
+// Function to show the welcome overlay
+function showWelcomeOverlay() {
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    if (welcomeOverlay) {
+        welcomeOverlay.style.display = 'flex';
+    }
+}
+
+// Function to hide the welcome overlay
+function hideWelcomeOverlay() {
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    if (welcomeOverlay) {
+        const dontShowTodayCheckbox = document.getElementById('dontShowTodayCheckbox');
+        if (dontShowTodayCheckbox && dontShowTodayCheckbox.checked) {
+            // Set a flag in localStorage that expires at the end of today
+            const now = new Date();
+            // Midnight of tomorrow
+            const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0); 
+            localStorage.setItem(DONT_SHOW_TODAY_KEY, endOfToday.getTime().toString());
+        }
+        welcomeOverlay.style.display = 'none';
+        // チェックボックスの状態をリセット
+        if (dontShowTodayCheckbox) dontShowTodayCheckbox.checked = false;
+    }
+
 }
 
 // 講義室番号を送信する関数
@@ -64,7 +97,9 @@ function submitClassroomNumber() {
 // eventオブジェクトを受け取るように修正
 function setDisplayedDay(event, day) {
     event.stopPropagation(); // イベント伝播を停止
+    isForcedDisplay = true; // 強制表示フラグを立てる
     showWeekdaySections(day); // セクション表示を更新
+    updateDayDisplay(); // 曜日表示を更新
     updateClassVisibility(); // 表示を即時更新
     // メニューを閉じる処理に遅延を追加
     setTimeout(() => hideMenu('adminMenu'), 100); // 遅延を100ミリ秒に調整
@@ -74,32 +109,58 @@ function setDisplayedDay(event, day) {
 // eventオブジェクトを受け取るように修正
 function resetDisplayedDay(event) {
     event.stopPropagation(); // イベント伝播を停止
+    isForcedDisplay = false; // 強制表示フラグを解除
     showWeekdaySections(); // セクション表示を今日の曜日に戻す
+    updateDayDisplay(); // 曜日表示を更新
     updateClassVisibility(); // 表示を即時更新
     // メニューを閉じる処理に遅延を追加
     setTimeout(() => hideMenu('adminMenu'), 100); // 遅延を100ミリ秒に調整
+}
+
+// ウェルカムオーバーレイを次回アクセス時に再表示する
+function resetWelcomeOverlay() {
+    localStorage.removeItem(DONT_SHOW_TODAY_KEY);
+    alert('ウェルカムメッセージが次回アクセス時に再表示されます。');
+}
+
+// ウェルカムオーバーレイを今すぐ表示する
+function showWelcomeOverlayNow() {
+    hideMenu('adminMenu');
+    // 少し遅延させて表示
+    setTimeout(showWelcomeOverlay, 150);
 }
 
 // 管理メニューの「管理モード」トグルを処理する関数
 function toggleAdminMode(isChecked) {
     const body = document.body;
     const adminMenuButton = document.getElementById('adminMenuButton');
-    const adminOptionsWrapper = document.getElementById('adminOptionsWrapper');
+    const adminOptions = document.querySelectorAll('.admin-option');
+    const adminIndicator = document.getElementById('admin-mode-indicator');
 
     if (isChecked) {
         body.classList.add('admin-mode-active');
         if (adminMenuButton) adminMenuButton.style.display = 'inline-block';
-        if (adminOptionsWrapper) adminOptionsWrapper.classList.remove('disabled');
+        adminOptions.forEach(el => el.classList.remove('disabled'));
+        if (adminIndicator) adminIndicator.style.display = 'block';
     } else {
         body.classList.remove('admin-mode-active');
         if (adminMenuButton) adminMenuButton.style.display = 'none';
-        if (adminOptionsWrapper) adminOptionsWrapper.classList.add('disabled');
+        adminOptions.forEach(el => el.classList.add('disabled'));
+        if (adminIndicator) adminIndicator.style.display = 'none';
 
         // 管理モードがOFFになったら、講義全表示もOFFにする
         const showAllToggle = document.getElementById('showAllClassesToggle');
         if (showAllToggle && showAllToggle.checked) {
             showAllToggle.checked = false;
             toggleShowAllClasses(false); // 状態をリセット
+        }
+
+        // 強制表示も解除する
+        if (isForcedDisplay) {
+            isForcedDisplay = false;
+            showWeekdaySections(); // 引数なしで呼び出し、今日の曜日に戻す
+            updateDayDisplay();
+            updateClassVisibility(); // 表示を更新
         }
     }
 }
@@ -150,38 +211,81 @@ function showWeekdaySections(dayToShow) {
 
 // 個々のコースのHTML要素を生成する関数
 function createCourseElement(course) {
-    const container = document.createElement('div');
-    container.className = 'content-container';
+    const template = document.getElementById('course-card-template');
+    const clone = template.content.cloneNode(true);
+
+    const container = clone.querySelector('.content-container');
+    const timeP = clone.querySelector('.course-time');
+    const title = clone.querySelector('h1');
+    const button = clone.querySelector('.transition-button');
 
     // course.time (e.g., "09:00 - 11:00") から開始時刻をパースしてdata属性に保存
     const startTimeStr = course.time.split(' - ')[0];
     container.dataset.startTime = startTimeStr;
 
-    const timeContainer = document.createElement('div');
-    timeContainer.className = 'left-aligned-container';
-    const timeP = document.createElement('p');
-    timeP.className = 'course-time';
     timeP.textContent = course.time;
-    timeContainer.appendChild(timeP);
-
-    const title = document.createElement('h1');
     title.textContent = course.name;
-
-    const button = document.createElement('button');
-    button.className = 'transition-button';
-    button.textContent = '出欠登録';
 
     if (course.action.type === 'directLink') {
         button.onclick = () => openNewWindow(course.action.value);
     } else if (course.action.type === 'menu') {
-        button.onclick = () => showMenu(course.action.value);
+        // メニューデータをボタンに紐付けて、クリック時に動的生成する
+        button.onclick = () => createAndShowMenu(course.action);
     }
 
-    container.appendChild(timeContainer);
-    container.appendChild(title);
-    container.appendChild(button);
-
     return container;
+}
+
+// メニューを動的に生成して表示する関数
+function createAndShowMenu(menuData) {
+    const existingMenu = document.getElementById(menuData.menuId);
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+
+    const template = document.getElementById('choice-menu-template');
+    const clone = template.content.cloneNode(true);
+
+    const menuOverlay = clone.querySelector('.menu-overlay');
+    const title = clone.querySelector('h2');
+    const grid = clone.querySelector('.class-buttons-grid');
+    const closeButton = clone.querySelector('.close-menu-button');
+
+    menuOverlay.id = menuData.menuId;
+    title.textContent = menuData.title;
+
+    // 各選択肢ボタンを作成
+    menuData.options.forEach(option => {
+        const button = document.createElement('button');
+        button.textContent = option.name;
+        if (option.disabled || !option.url) {
+            button.classList.add('grayed-out-button');
+        } else {
+            button.onclick = () => openNewWindow(option.url);
+        }
+        grid.appendChild(button);
+    });
+
+    closeButton.onclick = () => hideDynamicMenu(menuData.menuId);
+
+    // オーバーレイクリックで閉じる
+    menuOverlay.addEventListener('click', function(event) {
+        if (event.target === menuOverlay) {
+            hideDynamicMenu(menuData.menuId);
+        }
+    });
+
+    // bodyに追加して表示
+    document.body.appendChild(clone);
+    menuOverlay.style.display = 'flex';
+}
+
+// 動的に生成されたメニューを削除する関数
+function hideDynamicMenu(menuId) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+        menu.remove();
+    }
 }
 
 // ページ読み込み時にコース情報を読み込んで表示する
@@ -192,7 +296,8 @@ async function loadAllCourses() {
         'wednesday': 'wednesdaySections',
         'thursday': 'thursdaySections',
         'friday': 'fridaySections',
-        'saturday': 'saturdaySections'
+        'saturday': 'saturdaySections',
+        'sunday': 'sundaySections'
     };
 
     // 各曜日のJSONを並行して読み込む
@@ -207,21 +312,16 @@ async function loadAllCourses() {
             
             if (sectionElement) {
                 sectionElement.innerHTML = ''; // 既存の内容をクリア
-                if (courses.length > 0) {
-                    courses.forEach(course => {
-                        const courseElement = createCourseElement(course);
-                        sectionElement.appendChild(courseElement);
-                    });
-                    // 講義はあるが、時間外の場合に表示するメッセージを追加
-                    const noClassMessage = document.createElement('p');
-                    noClassMessage.className = 'no-class-message';
-                    noClassMessage.textContent = '現在表示可能な講義はありません';
-                    noClassMessage.style.display = 'none'; // 初期状態では非表示
-                    sectionElement.appendChild(noClassMessage);
-                } else {
-                    // そもそも講義が一つもない場合
-                    sectionElement.innerHTML = '<p>該当講義なし</p>';
-                }
+                courses.forEach(course => {
+                    const courseElement = createCourseElement(course);
+                    sectionElement.appendChild(courseElement);
+                });
+                // 講義がない場合、または時間外の場合に表示するメッセージを常に追加
+                const noClassMessage = document.createElement('p');
+                noClassMessage.className = 'no-class-message';
+                noClassMessage.textContent = 'この時間に出欠登録できる講義はありません';
+                noClassMessage.style.display = 'none'; // 初期状態では非表示
+                sectionElement.appendChild(noClassMessage);
             }
         } catch (error) {
             console.error(`Could not load courses for ${day}:`, error);
@@ -235,92 +335,145 @@ async function loadAllCourses() {
     await Promise.all(promises);
 }
 
+// Function to check localStorage and show welcome overlay if needed
+function checkAndShowWelcomeOverlay() {
+    const storedValue = localStorage.getItem(DONT_SHOW_TODAY_KEY);
+    if (storedValue) {
+        const expirationTime = parseInt(storedValue, 10);
+        const now = new Date().getTime();
+        if (now < expirationTime) {
+            // It's still today, don't show the overlay
+            return;
+        } else {
+            // Expiration time passed, clear the flag
+            localStorage.removeItem(DONT_SHOW_TODAY_KEY);
+        }
+    }
+    showWelcomeOverlay(); // If no flag or flag expired, show the overlay
+}
+
 // 時間に基づいて講義の表示・非表示を切り替える関数
 function updateClassVisibility() {
     const now = new Date();
     const todayIndex = now.getDay();
-
-    // 表示中の曜日が今日でない、または「講義全表示」がONの場合、その曜日の講義をすべて表示する
-    if (displayedDayIndex !== todayIndex || showAllClasses) {
-        const visibleSection = document.querySelector('.weekday-sections[style*="display: flex"], .weekday-sections[style*="display: block"]');
-        if (visibleSection) {
-            const courses = visibleSection.querySelectorAll('.content-container');
-            courses.forEach(course => {
-                course.style.display = 'flex';
-            });
-            const noClassMessage = visibleSection.querySelector('.no-class-message');
-            if (noClassMessage) {
-                noClassMessage.style.display = 'none';
-            }
-        }
-        return;
-    }
-
-    // 表示中の曜日が今日の場合、時間に基づいて表示を切り替える
     const daysMap = ['sundaySections', 'mondaySections', 'tuesdaySections', 'wednesdaySections', 'thursdaySections', 'fridaySections', 'saturdaySections'];
-    const sectionId = daysMap[todayIndex];
+    const sectionId = daysMap[displayedDayIndex];
     const sectionElement = document.getElementById(sectionId);
 
     if (!sectionElement) return;
 
     const courses = sectionElement.querySelectorAll('.content-container');
+    const noClassMessage = sectionElement.querySelector('.no-class-message');
     let visibleCoursesCount = 0;
 
-    courses.forEach(course => {
-        const startTimeStr = course.dataset.startTime;
-        if (!startTimeStr) {
-            course.style.display = 'flex'; // data-start-timeがない場合は常に表示
-            return;
-        }
-
-        const [startHour, startMinute] = startTimeStr.split(':').map(Number);
-
-        const classStartTime = new Date(now);
-        classStartTime.setHours(startHour, startMinute, 0, 0);
-
-        // 表示開始時刻（講義開始30分前）
-        const displayStartTime = new Date(classStartTime);
-        displayStartTime.setMinutes(classStartTime.getMinutes() - 30);
-
-        // 表示終了時刻（講義開始1時間後）
-        const displayEndTime = new Date(classStartTime);
-        displayEndTime.setHours(classStartTime.getHours() + 1);
-
-        if (now >= displayStartTime && now <= displayEndTime) {
+    // 「講義全表示」がONの場合
+    if (showAllClasses) {
+        courses.forEach(course => {
             course.style.display = 'flex';
-            visibleCoursesCount++;
-        } else {
+        });
+        visibleCoursesCount = courses.length;
+    }
+    // 「講義全表示」がOFFで、かつ表示中の曜日が今日の場合
+    else if (displayedDayIndex === todayIndex) {
+        courses.forEach(course => {
+            const startTimeStr = course.dataset.startTime;
+            if (!startTimeStr) {
+                course.style.display = 'flex';
+                visibleCoursesCount++;
+                return;
+            }
+
+            const [startHour, startMinute] = startTimeStr.split(':').map(Number);
+            const classStartTime = new Date(now);
+            classStartTime.setHours(startHour, startMinute, 0, 0);
+            const displayStartTime = new Date(classStartTime);
+            displayStartTime.setMinutes(classStartTime.getMinutes() - 30);
+            const displayEndTime = new Date(classStartTime);
+            displayEndTime.setHours(classStartTime.getHours() + 1);
+
+            if (now >= displayStartTime && now <= displayEndTime) {
+                course.style.display = 'flex';
+                visibleCoursesCount++;
+            } else {
+                course.style.display = 'none';
+            }
+        });
+    }
+    // 「講義全表示」がOFFで、かつ表示中の曜日が今日でない場合
+    else {
+        courses.forEach(course => {
             course.style.display = 'none';
-        }
-    });
+        });
+        visibleCoursesCount = 0;
+    }
 
     // 表示可能な講義が一つもない場合にメッセージを表示
-    const noClassMessage = sectionElement.querySelector('.no-class-message');
     if (noClassMessage) {
-        noClassMessage.style.display = (visibleCoursesCount === 0 && courses.length > 0) ? 'block' : 'none';
+        noClassMessage.style.display = (visibleCoursesCount === 0) ? 'block' : 'none';
     }
 }
 
 // ページ読み込み時に実行
-window.onload = async function() {
+window.onload = function() {
+    // 汎用的な初期化処理
+    initializeHamburgerMenu();
+    initializeOverlayClosers();
+
+    // メインページ（講義一覧ページ）でのみ実行する初期化処理
+    if (document.getElementById('mondaySections')) {
+        initializeMainPage();
+    }
+};
+
+async function initializeMainPage() {
     await loadAllCourses(); // JSONからコース情報を読み込んで表示
-    displayCurrentDay(); // 曜日を表示
     showWeekdaySections(); // 曜日ごとのセクションを切り替え、displayedDayIndexを初期化
+    updateDayDisplay(); // 曜日表示を初期化
     
     // 初期状態で管理メニューのオプションを無効化
-    document.getElementById('adminOptionsWrapper').classList.add('disabled');
+    document.querySelectorAll('.admin-option').forEach(el => el.classList.add('disabled'));
 
     updateClassVisibility(); // ページ読み込み時に一度実行
+    checkAndShowWelcomeOverlay(); // ウェルカムオーバーレイの表示をチェック
     setInterval(updateClassVisibility, 30000); // 30秒ごとに表示を更新
+}
 
+function initializeHamburgerMenu() {
+    // ハンバーガーメニューの制御
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+    const siteHeader = document.querySelector('.site-header');
+
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', (event) => {
+            event.stopPropagation(); // bodyのクリックイベントに伝播させない
+            const isActive = mainNav.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive);
+        });
+
+        // メニュー外をクリックしたら閉じる
+        document.body.addEventListener('click', (event) => {
+            // メニューが開いていて、クリックがメニュー内でもヘッダー内でもない場合
+            if (mainNav.classList.contains('active') && !mainNav.contains(event.target) && !siteHeader.contains(event.target)) {
+                mainNav.classList.remove('active');
+                menuToggle.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+}
+
+function initializeOverlayClosers() {
     // 各メニューオーバーレイがクリックされたらメニューを閉じるイベントリスナー
     const menuOverlays = document.querySelectorAll('.menu-overlay');
     menuOverlays.forEach(overlay => {
         overlay.addEventListener('click', function(event) {
             // メニューコンテンツ自体をクリックした場合は閉じない
-            if (event.target === overlay) {
+            // welcomeOverlayは背景クリックで閉じないようにする
+            if (event.target === overlay && overlay.id !== 'welcomeOverlay') {
                 hideMenu(overlay.id);
             }
         });
     });
-};
+}

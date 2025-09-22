@@ -1,38 +1,104 @@
 [
   {
-    "time": "9:00 - 11:00",
+    "time": "09:00 - 11:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceThursday9Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceThursday9Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "フライングディスク", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104" },
+        { "name": "ヨガ", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
     "time": "10:00 - 12:00",
     "name": "異文化理解 知能・認知・高度",
-    "action": { "type": "menu", "value": "crossCulturalUnderstandingThursday10Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "crossCulturalUnderstandingThursday10Menu",
+      "title": "異文化理解 知能・認知・高度",
+      "options": [
+        { "name": "須藤", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8203" },
+        { "name": "砂井", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207" },
+        { "name": "髙松", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8204" },
+        { "name": "仲町", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8205" },
+        { "name": "佐藤", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8206" }
+      ]
+    }
   },
   {
     "time": "11:00 - 13:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceThursday11Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceThursday11Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" },
+        { "name": "ウォーミング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104" },
+        { "name": "卓球", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5107" }
+      ]
+    }
   },
   {
     "time": "13:00 - 15:00",
     "name": "英語表現２",
-    "action": { "type": "menu", "value": "englishExpression2Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "englishExpression2Menu",
+      "title": "英語表現２",
+      "options": [
+        { "name": "ａクラス", "disabled": true },
+        { "name": "ｂクラス", "disabled": true },
+        { "name": "ｃクラス", "disabled": true },
+        { "name": "ｄクラス", "disabled": true },
+        { "name": "ｅクラス", "disabled": true },
+        { "name": "ｆクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5105" }
+      ]
+    }
   },
   {
     "time": "13:00 - 15:00",
     "name": "スポーツ科学",
-    "action": { "type": "menu", "value": "sportsScienceThursday13Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "sportsScienceThursday13Menu",
+      "title": "スポーツ科学",
+      "options": [
+        { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" }
+      ]
+    }
   },
   {
     "time": "15:00 - 17:00",
     "name": "学部指定科目群１",
-    "action": { "type": "menu", "value": "facultySubjectsMenu" }
+    "action": {
+      "type": "menu",
+      "menuId": "facultySubjectsMenu",
+      "title": "学部指定科目群１",
+      "options": [
+        { "name": "倫理学", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7205" },
+        { "name": "歴史と人間", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102" },
+        { "name": "心理学", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5103" },
+        { "name": "憲法と社会", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7201" },
+        { "name": "科学技術史", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202" },
+        { "name": "環境科学概論", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5208" }
+      ]
+    }
   },
   {
     "time": "15:00 - 17:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialThursday15Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialThursday15Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "微分方程式", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8106" }
+      ]
+    }
   },
   {
     "time": "17:00 - 19:00",
@@ -42,6 +108,14 @@
   {
     "time": "17:00 - 19:00",
     "name": "補習授業",
-    "action": { "type": "menu", "value": "remedialThursday17Menu" }
+    "action": {
+      "type": "menu",
+      "menuId": "remedialThursday17Menu",
+      "title": "補習授業",
+      "options": [
+        { "name": "数学基礎", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8106" },
+        { "name": "線形代数応用", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8201" }
+      ]
+    }
   }
 ]

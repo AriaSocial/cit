@@ -8,51 +8,106 @@
 </head>
 <body>
 
+    <header class="site-header">
+        <h1 class="site-title">ChibaTech 出欠登録</h1>
+        <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+    <nav class="main-nav" id="main-nav">
+        <ul>
+            <li><a href="./">ホーム</a></li>
+            <li><a href="./contact-us/">お問い合わせ</a></li>
+            <li class="nav-separator"><hr></li>
+            <li><a href="https://portal.it-chiba.ac.jp/" target="_blank" rel="noopener noreferrer">CIT ポータル</a></li>
+            <li><a href="https://cit.manaba.jp/" target="_blank" rel="noopener noreferrer">manaba</a></li>
+        </ul>
+    </nav>
+    <div class="header-lines">
+        <div class="line-thin"></div>
+        <div class="line-thick"></div>
+    </div>
+
     <div class="outer-container">
         <div class="day-display-container">
             <p id="current-day"></p>
         </div>
         <div class="classroom-button-container">
-            <button class="classroom-entry-button" onclick="showMenu('classroomNumberMenu')">講義室指定</button>
+            <button class="classroom-entry-button" onclick="showMenu('classroomNumberMenu')">講義室を指定</button>
             <button id="adminMenuButton" class="classroom-entry-button admin-button" onclick="showMenu('adminMenu')" style="display: none;">管理メニュー</button>
         </div>
-        <hr class="divider">
-
+        <div class="divider-wrapper">
+            <p id="admin-mode-indicator">管理モードが有効です</p>
+            <hr class="divider">
+        </div>
         <div id="mondaySections" class="weekday-sections"></div>
         <div id="tuesdaySections" class="weekday-sections"></div>
         <div id="wednesdaySections" class="weekday-sections"></div>
         <div id="thursdaySections" class="weekday-sections"></div>
         <div id="fridaySections" class="weekday-sections"></div>
         <div id="saturdaySections" class="weekday-sections"></div>
-        <div id="sundaySections" class="weekday-sections">
-             <p>該当講義なし</p>
+        <div id="sundaySections" class="weekday-sections"></div>
+    </div>
+
+    <div id="welcomeOverlay" class="menu-overlay">
+        <div class="menu-content">
+            <h2>ChibaTech 出欠登録</h2>
+            <div class="scrollable-content">
+                <p>このサイトは、非公式の出欠登録ツールです。<strong>授業開始30分前から授業終了60分後まで</strong>、該当講義の出欠登録ページへのリンクが表示されます。</p>
+                <div class="faq-section">
+                    <hr>
+                    <p class="faq-title">よくある質問</p>
+                    <ul class="welcome-instructions-list">
+                        <li>
+                            <strong>Q. 時間になってもリンクが表示されません。</strong>
+                            <p>A. ページを再読み込みしてください。それでも表示されない場合は、ページ左上の「講義室を指定」から、講義室番号を直接入力して出欠登録を行ってください。</p>
+                        </li>
+                        <li>
+                            <strong>Q. グレーアウトしているボタンがあります。</strong>
+                            <p>A. その科目は講義室番号が未登録です。お手数ですが、ページ右上のメニュー（三本線）から、講義名と講義室番号をご連絡いただけると助かります。</p>
+                        </li>
+                        <li>
+                            <strong>Q. 出欠登録ページへのリンクが正しくありません。</strong>
+                            <p>A. 申し訳ございません。すぐに修正いたしますので、ページ右上のメニュー（三本線）から、該当の講義名と正しい講義室番号をお知らせください。</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="welcome-checkbox-container">
+                    <input type="checkbox" id="dontShowTodayCheckbox">
+                    <label for="dontShowTodayCheckbox">今日は表示しない</label>
+                </div>
+            </div>
+            <button class="close-menu-button" onclick="hideWelcomeOverlay()">閉じる</button>
         </div>
     </div>
 
+
     <div id="classroomNumberMenu" class="menu-overlay">
         <div class="menu-content">
-            <h2>講義室番号で出欠登録</h2>
+            <h2>講義室番号を指定して出欠登録</h2>
             <input type="text" id="classroomNumberInput" placeholder="講義室番号を入力">
-            <button class="classroom-submit-button" onclick="submitClassroomNumber()">登録</button>
-            <button class="close-menu-button" onclick="hideMenu('classroomNumberMenu')">閉じる</button>
+            <div class="menu-button-container">
+                <button class="classroom-submit-button" onclick="submitClassroomNumber()">出欠登録</button>
+                <button class="close-menu-button" onclick="hideMenu('classroomNumberMenu')">閉じる</button>
+            </div>
         </div>
     </div>
 
     <div id="adminMenu" class="menu-overlay">
         <div class="menu-content">
             <h2>管理メニュー</h2>
-            <div class="admin-menu-controls">
-                <div class="toggle-switch-container">
-                    <span>管理モード</span>
-                    <label class="switch">
-                        <input type="checkbox" id="adminModeToggle" onchange="toggleAdminMode(this.checked)">
-                        <span class="slider round"></span>
-                    </label>
-                </div>
-            </div>
-            <div id="adminOptionsWrapper">
-                <div class="admin-menu-controls">
+            <div class="scrollable-content">
+                <div class="admin-toggles-container">
                     <div class="toggle-switch-container">
+                        <span>管理モード</span>
+                        <label class="switch">
+                            <input type="checkbox" id="adminModeToggle" onchange="toggleAdminMode(this.checked)">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-switch-container admin-option">
                         <span>講義全表示</span>
                         <label class="switch">
                             <input type="checkbox" id="showAllClassesToggle" onchange="toggleShowAllClasses(this.checked)">
@@ -60,338 +115,50 @@
                         </label>
                     </div>
                 </div>
-                <div class="day-selection-grid">
-                    <button onclick="setDisplayedDay(event, 1)">月曜日</button>
-                    <button onclick="setDisplayedDay(event, 2)">火曜日</button>
-                    <button onclick="setDisplayedDay(event, 3)">水曜日</button>
-                    <button onclick="setDisplayedDay(event, 4)">木曜日</button>
-                    <button onclick="setDisplayedDay(event, 5)">金曜日</button>
-                    <button onclick="setDisplayedDay(event, 6)">土曜日</button>
-                    <button onclick="setDisplayedDay(event, 0)">日曜日</button>
-                    <button class="reset-button" onclick="resetDisplayedDay(event)">解除</button>
+                <div class="day-selection-wrapper admin-option">
+                    <p class="force-display-label">強制表示</p>
+                    <div class="day-selection-grid">
+                        <button onclick="setDisplayedDay(event, 1)">月曜日</button>
+                        <button onclick="setDisplayedDay(event, 2)">火曜日</button>
+                        <button onclick="setDisplayedDay(event, 3)">水曜日</button>
+                        <button onclick="setDisplayedDay(event, 4)">木曜日</button>
+                        <button onclick="setDisplayedDay(event, 5)">金曜日</button>
+                        <button onclick="setDisplayedDay(event, 6)">土曜日</button>
+                        <button onclick="setDisplayedDay(event, 0)">日曜日</button>
+                        <button class="reset-button" onclick="resetDisplayedDay(event)">解除</button>
+                    </div>
+                </div>
+                <div class="welcome-overlay-controls admin-option">
+                    <p class="control-label">ウェルカム表示</p>
+                    <button class="admin-action-button" onclick="resetWelcomeOverlay()">次回アクセス時に再表示</button>
+                    <button class="admin-action-button" onclick="showWelcomeOverlayNow()">今すぐ再表示</button>
                 </div>
             </div>
             <button class="close-menu-button" onclick="hideMenu('adminMenu')">閉じる</button>
         </div>
     </div>
 
-    <!-- Monday Menus -->
-    <div id="sportsScienceMonday9Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">バスケットボール</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">トレーニング</button>
+    <!-- Template for a single course card -->
+    <template id="course-card-template">
+        <div class="content-container">
+            <div class="left-aligned-container">
+                <p class="course-time"></p>
             </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceMonday9Menu')">閉じる</button>
+            <h1></h1>
+            <button class="transition-button">出欠登録</button>
         </div>
-    </div>
-    <div id="languageCultureMonday9Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>言語と文化2</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307')">ドイツ語_高度</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">フランス語_高度</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5209')">中国語_高度</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('languageCultureMonday9Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="linearAlgebraAppliedMonday11Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>線形代数応用 高度</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8208')">奇数</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207')">偶数</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('linearAlgebraAppliedMonday11Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="sportsScienceMonday16Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102')">バドミントン</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">卓球</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceMonday16Menu')">閉じる</button>
-        </div>
-    </div>
+    </template>
 
-    <div id="englishUnderstanding2Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>英語理解２</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button grayed-out-button">ａクラス</button>
-                <button class="transition-button grayed-out-button">ｂクラス</button>
-                <button class="transition-button grayed-out-button">ｃクラス</button>
-                <button class="transition-button grayed-out-button">ｄクラス</button>
-                <button class="transition-button grayed-out-button">ｅクラス</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5305')">ｆクラス</button>
+    <!-- Template for a dynamic choice menu -->
+    <template id="choice-menu-template">
+        <div class="menu-overlay">
+            <div class="menu-content">
+                <h2></h2>
+                <div class="class-buttons-grid"></div>
+                <button class="close-menu-button" onclick="this.closest('.menu-overlay').style.display='none'">閉じる</button>
             </div>
-            <button class="close-menu-button" onclick="hideMenu('englishUnderstanding2Menu')">閉じる</button>
         </div>
-    </div>
-
-    <div id="sportsScienceMonday11Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">トレーニング</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceMonday11Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="sportsScienceMonday15Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">トレーニング</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceMonday15Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <!-- Wednesday Menus -->
-    <div id="sportsScienceWednesday9Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7203')">ブラサカ・ボッチャ</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">テニス</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceWednesday9Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="sportsScienceWednesday11Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">ゴルフ</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7203')">ブラサカ・ボッチャ</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">テニス</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceWednesday11Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="calculusWednesday10Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>微分積分 高度</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204')">aクラス</button>
-                <button class="transition-button grayed-out-button">b・cクラス</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('calculusWednesday10Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="sportsScienceWednesday15Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">ヨガ</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceWednesday15Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <!-- Thursday Menus -->
-    <div id="sportsScienceThursday9Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">フライングディスク</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">ヨガ</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceThursday9Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="crossCulturalUnderstandingThursday10Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>異文化理解 知能・認知・高度</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8203')">須藤</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207')">砂井</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8204')">髙松</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8205')">仲町</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8206')">佐藤</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('crossCulturalUnderstandingThursday10Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="sportsScienceThursday11Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">バドミントン</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104')">ウォーミング</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5107')">卓球</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceThursday11Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="englishExpression2Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>英語表現２</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button grayed-out-button">ａクラス</button>
-                <button class="transition-button grayed-out-button">ｂクラス</button>
-                <button class="transition-button grayed-out-button">ｃクラス</button>
-                <button class="transition-button grayed-out-button">ｄクラス</button>
-                <button class="transition-button grayed-out-button">ｅクラス</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5105')">ｆクラス</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('englishExpression2Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="sportsScienceThursday13Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">バドミントン</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceThursday13Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="facultySubjectsMenu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>学部指定科目群１</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7205')">倫理学</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5102')">歴史と人間</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5103')">心理学</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7201')">憲法と社会</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202')">科学技術史</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5208')">環境科学概論</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('facultySubjectsMenu')">閉じる</button>
-        </div>
-    </div>
-
-    <!-- Friday Menus -->
-    <div id="sportsScienceFriday9Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">卓球</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5302')">ソフトボール</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5207')">サッカー</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8104')">バドミントン</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceFriday9Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="sportsScienceFriday11Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101')">レクリエーション</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5207')">サッカー</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">ウォーキング</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceFriday11Menu')">閉じる</button>
-        </div>
-    </div>
-    <div id="sportsScienceFriday15Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101')">卓球</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304')">バドミントン</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceFriday15Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="sportsScienceFriday13Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>スポーツ科学</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5304')">バスケットボール</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('sportsScienceFriday13Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <!-- Remedial/Supplementary Class Menus -->
-    <div id="remedialMonday16Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8107')">確率統計</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialMonday16Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialTuesday15Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202')">線形代数基礎</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialTuesday15Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialTuesday17Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103')">数理・データサイエンス・AI入門</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5204')">言語と文化１ ドイツ語</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5202')">微分積分</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialTuesday17Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialWednesday17Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/5108')">線形代数基礎</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialWednesday17Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialThursday15Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8106')">微分方程式</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialThursday15Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialThursday17Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8106')">数学基礎</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8201')">線形代数応用</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialThursday17Menu')">閉じる</button>
-        </div>
-    </div>
-
-    <div id="remedialFriday17Menu" class="menu-overlay">
-        <div class="menu-content">
-            <h2>補習授業</h2>
-            <div class="class-buttons-grid">
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103')">数理・データサイエンス・AI入門</button>
-                <button class="transition-button" onclick="openNewWindow('https://attendance.is.it-chiba.ac.jp/attendance/class_room/8107')">数学基礎</button>
-            </div>
-            <button class="close-menu-button" onclick="hideMenu('remedialFriday17Menu')">閉じる</button>
-        </div>
-    </div>
+    </template>
 
     <script src="script.js"></script>
 </body>
