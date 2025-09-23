@@ -663,7 +663,7 @@ input:checked + .slider:before {
     gap: 20px;
     justify-content: center;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 /* 開発メニュー内の曜日選択エリアのラッパー */
@@ -672,7 +672,8 @@ input:checked + .slider:before {
     border-top: 1px solid #ccc;
     /* border-bottom: 1px solid #ccc; */
     padding: 15px 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 0;
     box-sizing: border-box;
 }
 
@@ -700,8 +701,8 @@ input:checked + .slider:before {
     font-size: 0.9em; /* フォントサイズを小さく調整 */
     cursor: pointer;
     border-radius: 8px;
-    background-color: #d93025; /* 固定の赤色 */
-    border: none;
+    background-color: #4168E1; /* 他のボタンと色を統一 */
+    border: none; 
     color: white;
     transition: background-color 0.3s ease, color 0.3s ease;
     text-align: center; /* テキスト中央寄せ */
@@ -709,7 +710,7 @@ input:checked + .slider:before {
 }
 
 .day-selection-grid button:not(.reset-button):hover {
-    background-color: #b0251c; /* 固定の濃い赤色 */
+    background-color: #3556b8; /* 他のボタンと色を統一 */
     color: white;
 }
 
@@ -754,8 +755,9 @@ input:checked + .slider:before {
     width: 100%;
     border-top: 1px solid #ccc;
     padding: 15px 10px;
-    margin-bottom: 20px;
+    margin-top: 20px;
     box-sizing: border-box;
+    text-align: left;
 }
 
 .admin-action-wrapper .control-label {
@@ -778,6 +780,7 @@ input:checked + .slider:before {
     border: none;
     color: white;
     transition: background-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 .admin-action-button:last-child {
