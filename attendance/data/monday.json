@@ -14,15 +14,15 @@
   },
   {
     "time": "09:00 - 11:00",
-    "name": "言語と文化2",
+    "name": "言語と文化２",
     "action": {
       "type": "menu",
       "menuId": "languageCultureMonday9Menu",
-      "title": "言語と文化2",
+      "title": "言語と文化２",
       "options": [
-        { "name": "ドイツ語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307" },
-        { "name": "フランス語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
-        { "name": "中国語_高度", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5209" }
+        { "name": "ドイツ語", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5307" },
+        { "name": "フランス語", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7101" },
+        { "name": "中国語", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5209" }
       ]
     }
   },
@@ -40,11 +40,11 @@
   },
   {
     "time": "11:00 - 13:00",
-    "name": "線形代数応用 高度",
+    "name": "線形代数応用",
     "action": {
       "type": "menu",
       "menuId": "linearAlgebraAppliedMonday11Menu",
-      "title": "線形代数応用 高度",
+      "title": "線形代数応用",
       "options": [
         { "name": "奇数", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8208" },
         { "name": "偶数", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207" }

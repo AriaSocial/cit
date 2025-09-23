@@ -1,12 +1,12 @@
 [
   {
     "time": "09:00 - 13:00",
-    "name": "情報リテラシ演習２ 高度",
+    "name": "情報リテラシ演習２",
     "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331" }
   },
   {
     "time": "14:00 - 16:00",
-    "name": "ＩＣＴ基礎 高度",
+    "name": "ＩＣＴ基礎",
     "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7202" }
   },
   {

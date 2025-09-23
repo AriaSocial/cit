@@ -14,11 +14,11 @@
   },
   {
     "time": "10:00 - 12:00",
-    "name": "微分積分 高度",
+    "name": "微分積分",
     "action": {
       "type": "menu",
       "menuId": "calculusWednesday10Menu",
-      "title": "微分積分 高度",
+      "title": "微分積分",
       "options": [
         { "name": "aクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204" },
         { "name": "b・cクラス", "disabled": true }
@@ -41,7 +41,7 @@
   },
   {
     "time": "13:00 - 15:00",
-    "name": "キャリアデザイン１ 高度",
+    "name": "キャリアデザイン１",
     "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/1331" }
   },
   {

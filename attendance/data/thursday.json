@@ -14,11 +14,11 @@
   },
   {
     "time": "10:00 - 12:00",
-    "name": "異文化理解 知能・認知・高度",
+    "name": "異文化理解",
     "action": {
       "type": "menu",
       "menuId": "crossCulturalUnderstandingThursday10Menu",
-      "title": "異文化理解 知能・認知・高度",
+      "title": "異文化理解",
       "options": [
         { "name": "須藤", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8203" },
         { "name": "砂井", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8207" },
@@ -102,17 +102,13 @@
   },
   {
     "time": "17:00 - 19:00",
-    "name": "数理・データサイエンス・AI入門",
-    "action": { "type": "directLink", "value": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103" }
-  },
-  {
-    "time": "17:00 - 19:00",
     "name": "補習授業",
     "action": {
       "type": "menu",
       "menuId": "remedialThursday17Menu",
       "title": "補習授業",
       "options": [
+        { "name":"数理・データサイエンス・AI入門", "url":"https://attendance.is.it-chiba.ac.jp/attendance/class_room/8103"},
         { "name": "数学基礎", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8106" },
         { "name": "線形代数応用", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/8201" }
       ]
