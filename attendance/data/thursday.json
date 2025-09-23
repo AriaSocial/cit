@@ -37,7 +37,7 @@
       "title": "スポーツ科学",
       "options": [
         { "name": "バドミントン", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5101" },
-        { "name": "ウォーミング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104" },
+        { "name": "ウォーキング", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5104" },
         { "name": "卓球", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5107" }
       ]
     }
