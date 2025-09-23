@@ -750,6 +750,22 @@ input:checked + .slider:before {
     text-align: left;
 }
 
+.admin-action-wrapper {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding: 15px 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.admin-action-wrapper .control-label {
+    font-size: 0.8em;
+    color: #555;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    text-align: left;
+}
+
 .admin-action-button {
     display: block;
     width: 100%;

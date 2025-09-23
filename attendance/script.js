@@ -130,6 +130,11 @@ function showWelcomeOverlayNow() {
     setTimeout(showWelcomeOverlay, 150);
 }
 
+// スーパーリロードを実行する関数
+function superReloadPage() {
+    location.reload(true);
+}
+
 // 管理メニューの「管理モード」トグルを処理する関数
 function toggleAdminMode(isChecked) {
     const body = document.body;
