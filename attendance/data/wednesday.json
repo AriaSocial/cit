@@ -20,8 +20,8 @@
       "menuId": "calculusWednesday10Menu",
       "title": "微分積分",
       "options": [
-        { "name": "aクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204" },
-        { "name": "b・cクラス", "disabled": true }
+        { "name": "ａクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7204" },
+        { "name": "ｂ・ｃクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/7201" }
       ]
     }
   },
