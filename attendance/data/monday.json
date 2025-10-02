@@ -59,7 +59,7 @@
       "menuId": "englishUnderstanding2Menu",
       "title": "英語理解２",
       "options": [
-        { "name": "ａクラス", "disabled": true },
+        { "name": "ａクラス", "url": "https://attendance.is.it-chiba.ac.jp/attendance/class_room/5207" },
         { "name": "ｂクラス", "disabled": true },
         { "name": "ｃクラス", "disabled": true },
         { "name": "ｄクラス", "disabled": true },
